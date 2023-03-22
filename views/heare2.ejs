@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bootstrap Header</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <header
+      class="navbar navbar-expand-lg navbar-light fixed-top"
+      style="
+        background: linear-gradient(
+          112.62deg,
+          #0197a6 0.41%,
+          #01373d 99.99%,
+          #003229 100%
+        );
+      "
+    >
+      <div class="container">
+        <a class="navbar-brand text-white" href="#">Brand Name</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#"
+                ><i class="bi bi-person-fill"></i
+              ></a>
+            </li>
+
+            <li class="nav-item">
+              <form class="d-flex">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-light" type="submit">
+                  Search
+                </button>
+              </form>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle text-white"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Categories
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdown"
+                style="
+                  background: linear-gradient(
+                    112.62deg,
+                    #0197a6 0.41%,
+                    #01373d 99.99%,
+                    #003229 100%
+                  );
+                "
+              >
+                <li>
+                  <a class="dropdown-item text-white" href="#"
+                    >Women's Fashion</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item text-white" href="#">Men's Fashion</a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-white" href="#">Kids' Fashion</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#"
+                ><i class="bi bi-bag-fill"></i
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>
