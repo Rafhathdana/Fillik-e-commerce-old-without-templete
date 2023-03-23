@@ -8,7 +8,8 @@ var usersRouter = require("./routes/user");
 var adminRouter = require("./routes/admin");
 
 var app = express();
-
+var db = require("./config/connection");
+var session = require("express-session");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -18,7 +19,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(session({ secret: "Key", cookie: { maxAge: 6000000 } }));
+db.connect((err) => {
+  if (err) console.log("Connection Error" + err);
+  else console.log("Database Connected successfully");
+});
 app.use("/", usersRouter);
 app.use("/admin", adminRouter);
 
