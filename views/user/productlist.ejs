@@ -1,0 +1,55 @@
+<header><%- include('../header') -%></header>
+<div class="container mt-5 mt-md-0" style="padding-top: 60px">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    <% for (let i = 0; i < 20; i++) { %>
+    <div class="col">
+      <div
+        class="card"
+        style="
+          border: 1px solid rgba(0, 0, 0, 0.19);
+          border-radius: 10px;
+          max-width: 253px;
+        "
+      >
+        <img
+          src="/images/qw1233.jpg"
+          class="card-img-top rounded-top"
+          style="height: 341px"
+          alt="product image"
+        />
+        <div class="card-body">
+          <h5
+            class="card-title"
+            style="
+              font-family: 'Inria Serif';
+              font-size: 18px;
+              color: #0197a6;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            "
+          >
+            Product Name hehewb hbrwjkc
+          </h5>
+          <p
+            class="card-text"
+            style="font-family: 'Inter'; font-size: 13px; color: #005159"
+          >
+            Green Printed Women Top
+          </p>
+          <p
+            class="card-text"
+            style="
+              font-family: 'Inter';
+              font-weight: 700;
+              font-size: 20px;
+              color: #005159;
+            "
+          >
+            $20
+          </p>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
