@@ -5,7 +5,7 @@
       <div class="col-12 col-md-6 col-lg-4">
         <div class="box p-4">
           <h1 class="signin-heading mb-4">Sign In</h1>
-          <form>
+          <form id="signin-form">
             <div class="form-floating mb-3">
               <input
                 type="email"
@@ -24,14 +24,42 @@
               />
               <label for="password">Password</label>
             </div>
+            <div class="form-floating mb-3">
+              <input
+                type="tel"
+                class="form-control"
+                id="mobile"
+                placeholder="Mobile Number"
+              />
+              <label for="mobile">Mobile Number</label>
+            </div>
             <div class="d-grid">
               <button class="btn btn-signin btn-lg mt-3" type="submit">
-                Sign Up
+                Sign In
               </button>
             </div>
           </form>
+          <div id="otp-section" class="d-none">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="otp"
+                placeholder="Enter OTP"
+              />
+              <label for="otp">OTP</label>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-verify-otp btn-lg mt-3" type="button">
+                Verify OTP
+              </button>
+            </div>
+          </div>
           <div class="d-flex justify-content-between links">
-            <a href="#" class="text-white">Forgot Password</a>
+            <a href="#" class="text-white" id="forget">Forgot Password</a>
+            <a onclick="normalSection()" class="text-white d-none" id="present"
+              >back</a
+            >
             <a href="signup" class="text-white">Create New User</a>
           </div>
         </div>
@@ -39,3 +67,59 @@
     </div>
   </div>
 </body>
+
+<script>
+  const signinForm = document.getElementById("signin-form");
+  const otpSection = document.getElementById("otp-section");
+  const forget = document.getElementById("forget");
+  const present = document.getElementById("present");
+
+  signinForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const mobile = document.getElementById("mobile").value;
+    if (mobile) {
+      sendOTP(mobile);
+      showOTPSection();
+    } else {
+      signinUser();
+    }
+  });
+
+  function sendOTP(mobile) {
+    // TODO: Generate and send OTP to the given mobile number.
+    return true;
+  }
+
+  function showOTPSection() {
+    signinForm.classList.add("d-none");
+    otpSection.classList.remove("d-none");
+    forget.classList.add("d-none");
+    present.classList.remove("d-none");
+  }
+  function normalSection() {
+    otpSection.classList.add("d-none");
+    signinForm.classList.remove("d-none");
+    forget.classList.remove("d-none");
+    present.classList.add("d-none");
+  }
+
+  const verifyOTPButton = document.querySelector(".btn-verify-otp");
+  verifyOTPButton.addEventListener("click", () => {
+    const otp = document.getElementById("otp").value;
+    if (verifyOTP(otp)) {
+      signinUser();
+    } else {
+      alert("Invalid OTP!");
+    }
+  });
+
+  function verifyOTP(otp) {
+    // TODO: Verify the given OTP.
+    return true;
+  }
+
+  function signinUser() {
+    // TODO: Sign in the user.
+    // Redirect to the home page.
+  }
+</script>

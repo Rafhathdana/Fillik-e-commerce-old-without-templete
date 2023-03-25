@@ -86,7 +86,7 @@ a {
   background-color: #036973;
   color: #fff;
   padding: 20px;
-  border-radius: 2px;
+  border-radius: 6px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
@@ -125,7 +125,7 @@ a {
 .btn-signin {
   height: 43px;
   border: 1px solid #ffffff;
-  border-radius: 2px;
+  border-radius: 8px;
   background-color: #fff;
   color: #036973;
   font-family: "Inter";
@@ -136,7 +136,22 @@ a {
   margin-top: 20px;
   cursor: pointer;
 }
-
+.btn-verify-otp {
+  height: 43px;
+  width: 100px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #036973;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  margin-top: 20px;
+  cursor: pointer;
+  justify-self: center;
+}
 .links {
   display: flex;
   justify-content: space-between;
@@ -265,3 +280,5 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* //header2 */

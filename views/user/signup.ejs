@@ -2,10 +2,10 @@
   <header><%- include('../header') -%></header>
   <div class="container mt-5 mt-md-0" style="padding-top: 60px">
     <div class="row justify-content-center align-items-center vh-100">
-      <div class="col-12 col-md-6 col-lg-4">
+      <div class="col-12 col-md-8 col-lg-6">
         <div class="box p-4">
           <h1 class="signin-heading mb-4">Sign Up</h1>
-          <form>
+          <form id="signup-form">
             <div class="form-floating mb-3">
               <input
                 type="email"
@@ -57,8 +57,134 @@
               </button>
             </div>
           </form>
+          <div id="otp-section" class="d-none">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="otp"
+                placeholder="Enter Otp"
+              />
+              <label for="otp">OTP</label>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-verify-otp btn-lg mt-3" type="button">
+                Verify OTP
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between links">
+            <a onclick="normalSection()" class="text-white d-none" id="present"
+              >back</a
+            >
+          </div>
         </div>
       </div>
     </div>
   </div>
 </body>
+<script>
+  const signupForm = document.getElementById("signup-form");
+  const otpSection = document.getElementById("otp-section");
+  const present = document.getElementById("present");
+
+  signupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const mobile = document.getElementById("mobile").value;
+    if (mobile) {
+      sendOTP(mobile);
+    } else {
+      signinUser();
+    }
+  });
+  function sendOTP(mobile) {
+    fetch("/sendotp", {
+      method: "POST",
+      body: JSON.stringify({
+        mobile: mobile,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json(); // get the response body
+      })
+      .then((data) => {
+        console.log(data);
+
+        if (data.success) {
+          console.log(data);
+
+          showOTPSection();
+          // OTP verification successful, submit the form
+          // document.querySelector('form').submit();
+        } else {
+          console.log(data);
+          normalSection();
+          // OTP verification failed, display an error message
+          alert("OTP Not sended. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(
+          "An error occurred while sending verifying OTP. Please try again later."
+        );
+      });
+  }
+
+  function showOTPSection() {
+    signupForm.classList.add("d-none");
+    otpSection.classList.remove("d-none");
+    present.classList.remove("d-none");
+  }
+  function normalSection() {
+    otpSection.classList.add("d-none");
+    signupForm.classList.remove("d-none");
+    present.classList.add("d-none");
+  }
+  const verifyOTPButton = document.querySelector(".btn-verify-otp");
+  verifyOTPButton.addEventListener("click", () => {
+    const otp = document.getElementById("otp").value;
+    if (verifyotp(otp)) {
+      signinUser();
+    } else {
+      alert("Invalid OTP!");
+    }
+  });
+
+  function verifyOTP(otp) {}
+  function signinUser() {
+    // TODO: Sign in the user.
+    // Redirect to the home page.
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    fetch("/signup", {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        name: name,
+        mobile: mobile,
+        password: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = "/dashboard";
+        } else {
+          alert("An error occurred. Please try again later.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("An error occurred. Please try again later.");
+      });
+  }
+</script>

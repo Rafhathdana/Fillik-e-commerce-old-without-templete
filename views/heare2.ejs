@@ -19,21 +19,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <header
-      class="navbar navbar-expand-lg navbar-light fixed-top"
-      style="
-        background: linear-gradient(
-          112.62deg,
-          #0197a6 0.41%,
-          #01373d 99.99%,
-          #003229 100%
-        );
-      "
-    >
-      <div class="container">
-        <a class="navbar-brand text-white" href="#">Brand Name</a>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"
+          ><img src="/images/icon.png" class="icon-head"
+        /></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -43,76 +36,154 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link text-white" href="#"
-                ><i class="bi bi-person-fill"></i
-              ></a>
+              <div class="nav-link"></div>
             </li>
-
-            <li class="nav-item">
-              <form class="d-flex">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-light" type="submit">
-                  Search
-                </button>
-              </form>
-            </li>
+          </ul>
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-light" type="submit">Search</button>
+          </form>
+          <ul class="navbar-nav">
             <li class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle text-white"
+                class="nav-link dropdown-toggle"
                 href="#"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Categories
+                Sort
               </a>
-              <ul
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdown"
-                style="
-                  background: linear-gradient(
-                    112.62deg,
-                    #0197a6 0.41%,
-                    #01373d 99.99%,
-                    #003229 100%
-                  );
-                "
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Men’s Shirts</a></li>
+                <li><a class="dropdown-item" href="#">Men’s T-Shirts</a></li>
+                <li><a class="dropdown-item" href="#">Men’s Pants</a></li>
+                <li><a class="dropdown-item" href="#">Women’s Tops</a></li>
+                <li><a class="dropdown-item" href="#">Women’s T-shirts</a></li>
+                <li><a class="dropdown-item" href="#">Women’s Pants</a></li>
+                <!-- <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li> -->
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
               >
+                Filter
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a class="dropdown-item text-white" href="#"
-                    >Women's Fashion</a
-                  >
+                  <div class="filter-item">
+                    <label for="name-input">Name:</label>
+                    <input type="text" id="name-input" />
+                  </div>
                 </li>
                 <li>
-                  <a class="dropdown-item text-white" href="#">Men's Fashion</a>
+                  <div class="filter-item">
+                    <label for="max-price-input">Max Price:</label>
+                    <input type="text" id="max-price-input" />
+                  </div>
                 </li>
                 <li>
-                  <a class="dropdown-item text-white" href="#">Kids' Fashion</a>
+                  <div class="filter-item">
+                    <label for="color-select">Color:</label>
+                    <select id="color-select">
+                      <option value="red">Red</option>
+                      <option value="green">Green</option>
+                      <option value="blue">Blue</option>
+                    </select>
+                  </div>
                 </li>
+                <li>
+                  <div class="filter-item">
+                    <label for="brand-select">Brand:</label>
+                    <select id="brand-select">
+                      <option value="nike">Nike</option>
+                      <option value="adidas">Adidas</option>
+                      <option value="puma">Puma</option>
+                    </select>
+                  </div>
+                </li>
+                <li>
+                  <div class="filter-item">
+                    <label for="pattern-select">Pattern:</label>
+                    <select id="pattern-select">
+                      <option value="striped">Striped</option>
+                      <option value="solid">Solid</option>
+                      <option value="plaid">Plaid</option>
+                    </select>
+                  </div>
+                </li>
+                <li>
+                  <button class="btn btn-primary apply-btn">Apply</button>
+                </li>
+                <!-- <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li> -->
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Women's Fashion
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Men’s Shirts</a></li>
+                <li><a class="dropdown-item" href="#">Men’s T-Shirts</a></li>
+                <li><a class="dropdown-item" href="#">Men’s Pants</a></li>
+                <li><a class="dropdown-item" href="#">Women’s Tops</a></li>
+                <li><a class="dropdown-item" href="#">Women’s T-shirts</a></li>
+                <li><a class="dropdown-item" href="#">Women’s Pants</a></li>
+                <!-- <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li> -->
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#"
-                ><i class="bi bi-bag-fill"></i
-              ></a>
+              <a class="nav-link" href="#">Cart</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Login</a>
+              <a class="nav-link" href="login">Login</a>
             </li>
           </ul>
         </div>
       </div>
-    </header>
+
+      <!-- Bootstrap JS and dependencies -->
+    </nav>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-BuB7yJ+6NXn/T7up/h5M5bCKn5vg07W8Dv+L2LJUyG3lqJW8UVv6UjRzYZRfrhUe"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
