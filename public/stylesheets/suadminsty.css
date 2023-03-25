@@ -4,18 +4,12 @@ a {
   text-decoration: none;
 }
 .rafcolour {
-  background: linear-gradient(
-    112.62deg,
-    #0197a6 0.41%,
-    #01373d 99.99%,
-    #003229 100%
-  );
+  background: linear-gradient(112.9deg, #8ef9e4 2.9%, #003b66 100%);
 }
 .navbar {
   position: relative;
   z-index: 9999;
 }
-
 .navbar-nav li a {
   color: white;
   text-decoration: none;
@@ -32,12 +26,7 @@ a {
 }
 
 .navbar-custom {
-  background: linear-gradient(
-    112.62deg,
-    #0197a6 0.41%,
-    #01373d 99.99%,
-    #003229 100%
-  );
+  background: linear-gradient(112.9deg, #8ef9e4 2.9%, #003b66 100%);
   color: white;
   position: fixed;
   top: 0;
@@ -64,12 +53,7 @@ a {
 }
 
 .navbar-custom .dropdown-menu {
-  background: linear-gradient(
-    112.62deg,
-    #0197a6 0.41%,
-    #01373d 99.99%,
-    #003229 100%
-  );
+  background: linear-gradient(112.9deg, #8ef9e4 2.9%, #003b66 100%);
 }
 
 .navbar-custom .nav-link {
@@ -113,15 +97,15 @@ a {
   color: #050505;
 }
 /* 
-.form-control-s {
-  height: 43px;
-  padding: 10px;
-  border: 1px solid #ffffff;
-  border-radius: 2px;
-  background-color: transparent;
-  color: #fff;
-}
-*/
+  .form-control-s {
+    height: 43px;
+    padding: 10px;
+    border: 1px solid #ffffff;
+    border-radius: 2px;
+    background-color: transparent;
+    color: #fff;
+  }
+  */
 .btn-signin {
   height: 43px;
   border: 1px solid #ffffff;
@@ -187,98 +171,54 @@ a {
   transform: translate(-50%, -50%);
 }
 
-/* product card box */
-/* .card {
-  border: 1px solid rgba(0, 0, 0, 0.19);
-  border-radius: 10px;
+/* usersdetails */
+table {
+  width: 100%;
+  border: 1px solid #000;
 }
 
-.product-img-container {
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.complaint-box {
   position: relative;
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
-  border-radius: 5px;
+  width: 54px;
+  height: 39px;
+  background: #e40303;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
-.product-img-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.product-title {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #0197a6;
-  font-family: "Inria Serif";
-  font-style: normal;
-  font-weight: 700;
+.complaint-number {
   font-size: 20px;
-  line-height: 24px;
-  text-align: center;
-  text-transform: capitalize;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  color: #fff;
 }
 
-.product-description {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 50px;
-  margin: 0;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #005159;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 16px;
-  text-align: center;
+.action-box {
+  position: relative;
+  width: 68px;
+  height: 24px;
+  background: #0197a6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 4px;
 }
 
-.product-rate {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #005159;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
+.action-text {
   font-size: 20px;
-  line-height: 24px;
-  text-align: center;
-} */
-
-.card-title {
-  left: 10px;
-  top: 350px;
-  font-family: "Inria Serif";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  text-align: center;
-  text-transform: capitalize;
-  color: #0197a6;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #fff;
 }
 
-/* //header2 */
+.details-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+}
