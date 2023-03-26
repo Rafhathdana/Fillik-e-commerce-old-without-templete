@@ -26,7 +26,7 @@ db.connect((err) => {
   else console.log("Database Connected successfully");
 });
 app.use("/", usersRouter);
-app.use("/admin", adminRouter);
+app.use("/merchant", adminRouter);
 app.use("/superadmin", supRouter);
 
 // catch 404 and forward to error handler

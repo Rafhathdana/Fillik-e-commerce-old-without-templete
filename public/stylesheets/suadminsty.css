@@ -173,8 +173,16 @@ a {
 
 /* usersdetails */
 table {
-  width: 100%;
-  border: 1px solid #000;
+  text-align: center;
+  color: #000000;
+  border: 2px solid rgba(7, 155, 4, 0.5);
+  box-sizing: border-box;
+  margin-top: 130px;
+  max-width: 80%;
+  align-self: center;
+  justify-content: center;
+  margin: 20px auto 30px auto;
+  justify-self: center;
 }
 
 th,
@@ -186,7 +194,8 @@ td {
 .complaint-box {
   position: relative;
   width: 54px;
-  height: 39px;
+  height: 26px;
+  border-radius: 6px;
   background: #e40303;
   display: flex;
   justify-content: center;
@@ -195,7 +204,7 @@ td {
 }
 
 .complaint-number {
-  font-size: 20px;
+  font-size: 18px;
   color: #fff;
 }
 
@@ -208,17 +217,36 @@ td {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  border-radius: 4px;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
+.action-box:first-of-type {
+  background: #e40303;
+}
 .action-text {
-  font-size: 20px;
+  font-size: 16px;
   color: #fff;
+  font-weight: bold;
 }
 
 .details-link {
   color: #fff;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
+}
+.heading {
+  width: 258px;
+  height: 36px;
+  margin-top: 100px;
+  margin-left: 40px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
 }

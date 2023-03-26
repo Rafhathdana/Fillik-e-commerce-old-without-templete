@@ -1,118 +1,103 @@
 a {
-    color: #ffffff;
-    text-emphasis: none;
-    text-decoration: none;
-  }
-  .rafcolour {
-    background: linear-gradient(
-      112.62deg,
-      #0197a6 0.41%,
-      #01373d 99.99%,
-      #003229 100%
-    );
-  }
-  .navbar {
-    position: relative;
-    z-index: 9999;
-  }
-  
-  .navbar-nav li a {
-    color: white;
-    text-decoration: none;
-  }
-  .navbar-nav li a:hover {
-    background-color: white;
-    color: black;
-    border-radius: 8px;
-  }
-  .icon-head {
-    width: 163px;
-    height: 40px;
-    margin-left: 116px;
-  }
-  
-  .navbar-custom {
-    background: linear-gradient(
-      112.62deg,
-      #0197a6 0.41%,
-      #01373d 99.99%,
-      #003229 100%
-    );
-    color: white;
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
-  
-  .navbar-custom .navbar-toggler {
-    color: white;
-    border-color: white;
-  }
-  
-  .navbar-custom .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .navbar-custom .form-control {
-    width: 300px;
-    margin-right: 10px;
-  }
-  
-  .navbar-custom .btn-group {
-    margin-right: 10px;
-  }
-  
-  .navbar-custom .dropdown-menu {
-    background: linear-gradient(
-      112.62deg,
-      #0197a6 0.41%,
-      #01373d 99.99%,
-      #003229 100%
-    );
-  }
-  
-  .navbar-custom .nav-link {
-    margin-right: 30px;
-  }
-  
-  .navbar-custom .nav-link:last-child {
-    margin-right: 20;
-  }
-  
-  /* signin */
-  
-  .box {
-    background-color: #036973;
-    color: #fff;
-    padding: 20px;
-    border-radius: 6px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .signin-heading {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 36px;
-    line-height: 29px;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .form-floating {
-    width: 368px;
-    margin-bottom: 20px;
-  }
-  
-  .form-floating label {
-    color: #050505;
-  }
-  /* 
+  color: #ffffff;
+  text-emphasis: none;
+  text-decoration: none;
+}
+.rafcolour {
+  background: linear-gradient(112.9deg, #c879f9 0%, #46085e 100%);
+}
+.navbar {
+  position: relative;
+  z-index: 9999;
+}
+
+.navbar-nav li a {
+  color: white;
+  text-decoration: none;
+}
+.navbar-nav li a:hover {
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+}
+.icon-head {
+  width: 163px;
+  height: 40px;
+  margin-left: 116px;
+}
+
+.navbar-custom {
+  background: linear-gradient(112.9deg, #c879f9 0%, #46085e 100%);
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar-custom .navbar-toggler {
+  color: white;
+  border-color: white;
+}
+
+.navbar-custom .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-custom .form-control {
+  width: 300px;
+  margin-right: 10px;
+}
+
+.navbar-custom .btn-group {
+  margin-right: 10px;
+}
+
+.navbar-custom .dropdown-menu {
+  background: linear-gradient(112.9deg, #c879f9 0%, #46085e 100%);
+}
+
+.navbar-custom .nav-link {
+  margin-right: 30px;
+}
+
+.navbar-custom .nav-link:last-child {
+  margin-right: 20;
+}
+
+/* signin */
+
+.box {
+  background-color: #46085e;
+  color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin-heading {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 29px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-floating {
+  width: 368px;
+  margin-bottom: 20px;
+}
+
+.form-floating label {
+  color: #050505;
+}
+/* 
   .form-control-s {
     height: 43px;
     padding: 10px;
@@ -122,67 +107,290 @@ a {
     color: #fff;
   }
   */
-  .btn-signin {
-    height: 43px;
-    border: 1px solid #ffffff;
-    border-radius: 8px;
-    background-color: #fff;
-    color: #036973;
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 29px;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-  .btn-verify-otp {
-    height: 43px;
-    width: 200px;
-    border: 1px solid #ffffff;
-    border-radius: 8px;
-    background-color: #fff;
-    color: #036973;
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 29px;
-    margin-top: 20px;
-    cursor: pointer;
-    justify-self: center;
-  }
-  .links {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .links a {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    color: #fff;
-  }
-  .sign-in-box {
-    position: absolute;
-    width: 450px;
-    height: 477px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid #ffffff;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 2px;
-  }
-  
-  .email-input {
-    width: 368px;
-    height: 84px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
+.btn-signin {
+  height: 43px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #036973;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.btn-verify-otp {
+  height: 43px;
+  width: 200px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #036973;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  margin-top: 20px;
+  cursor: pointer;
+  justify-self: center;
+}
+.links {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.links a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #fff;
+}
+.sign-in-box {
+  position: absolute;
+  width: 450px;
+  height: 477px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+
+.email-input {
+  width: 368px;
+  height: 84px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.margint50 {
+  margin-top: 170px;
+}
+
+/* product list */
+.outer-box {
+  box-sizing: border-box;
+  max-width: 1159px;
+  height: 135px;
+  margin: 20px auto;
+  border-radius: 6px;
+  display: flex;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+}
+
+.inner-img {
+  position: relative;
+  width: 85px;
+  height: 116px;
+  left: 11px;
+  top: 10px;
+  border-radius: 10px;
+}
+.productinfo {
+  position: relative;
+  width: 289px;
+  left: 34px;
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  flex-direction: column;
+  color: #000000;
+  margin: auto 0px;
+}
+.flex {
+  display: flex;
+}
+.product-id {
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 30px;
+}
+.product-id-value {
+  width: 110;
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 30px;
+  display: flex;
+  color: #46085e;
+}
+.status-value {
+  width: 110;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  margin-left: 46px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #079b04;
+}
+.text-block {
+  width: 198px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pink-color {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  color: #46085e;
+}
+
+.plain-pattern {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+}
+
+.sizes-box {
+  box-sizing: border-box;
+  width: 165px;
+  height: 109px;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  margin: auto 0px;
+  display: flex;
+  flex-direction: column;
+}
+.heading {
+  /* top: 45px; */
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 14px;
+  display: flex;
+  margin: 4px auto;
+  color: #000000;
+}
+.sizes {
+  margin-left: 0px;
+  height: 72px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 14px;
+  display: flex;
+  flex-direction: column;
+  color: #000000;
+}
+
+.size {
+  margin-top: 6px;
+  margin-left: 20px;
+}
+
+/* PRODUCT PRICE: */
+.prices {
+  width: 200px;
+  height: 87px;
+  top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto 0px;
+}
+.product-price {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+}
+
+.product-price-value {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+}
+
+.shorttext {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 8px;
+  line-height: 10px;
+  text-align: center;
+  color: #000000;
+}
+
+/* EDIT/DELETE BUTTONS: */
+.action-box1 {
+  width: 100px;
+  height: 31px;
+  top: 21px;
+  display: flex;
+  background: #f2eef45d;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: 2px solid rgba(101, 19, 106, 0.59);
+}
+
+.action-box1:hover {
+  background: #8d42ad79;
+  border: 3px solid rgba(110, 103, 103, 0.418);
+}
+.action-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: rgb(102, 19, 106);
+  margin: auto auto;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  margin: auto auto;
+}
+
+/* add product */
+
+.mainheading {
+  width: 258px;
+  height: 36px;
+  margin-top: 100px;
+  margin-left: 40px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+}
