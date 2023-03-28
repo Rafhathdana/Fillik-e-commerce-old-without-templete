@@ -1,16 +1,17 @@
+<%- include('../header') -%>
 <body class="rafcolour">
-  <header><%- include('../header') -%></header>
   <div class="container mt-5 mt-md-0">
     <div class="row justify-content-center align-items-center vh-100">
       <div class="col-12 col-md-8 col-lg-6">
         <div class="box p-4">
           <h1 class="signin-heading mb-4">Sign In</h1>
-          <form id="signin-form">
+          <form id="signin-form" action="/login" method="post">
             <div class="form-floating mb-3">
               <input
                 type="email"
                 class="form-control"
                 id="email"
+                name="email"
                 placeholder="name@example.com"
               />
               <label for="email">Email address</label>
@@ -20,46 +21,25 @@
                 type="password"
                 class="form-control"
                 id="password"
+                name="password"
                 placeholder="Password"
               />
               <label for="password">Password</label>
             </div>
-            <div class="form-floating mb-3">
-              <input
-                type="tel"
-                class="form-control"
-                id="mobile"
-                placeholder="Mobile Number"
-              />
-              <label for="mobile">Mobile Number</label>
+            <% if(locals.err_msg) { %>
+            <div class="alert alert-danger mt-2" role="alert" }>
+              <%=err_msg %>
             </div>
+            <% } %>
             <div class="d-grid">
               <button class="btn btn-signin btn-lg mt-3" type="submit">
                 Sign In
               </button>
             </div>
           </form>
-          <div id="otp-section" class="d-none">
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="otp"
-                placeholder="Enter OTP"
-              />
-              <label for="otp">OTP</label>
-            </div>
-            <div class="d-grid">
-              <button class="btn btn-verify-otp btn-lg mt-3" type="button">
-                Verify OTP
-              </button>
-            </div>
-          </div>
+
           <div class="d-flex justify-content-between links">
             <a href="#" class="text-white" id="forget">Forgot Password</a>
-            <a onclick="normalSection()" class="text-white d-none" id="present"
-              >back</a
-            >
             <a href="signup" class="text-white">Create New User</a>
           </div>
         </div>
@@ -87,7 +67,6 @@
           required: true,
           email: true,
         },
-
         password: {
           required: true,
           minlength: 8,
@@ -98,7 +77,6 @@
           required: "Please enter your email address",
           email: "Please enter a valid email address",
         },
-
         password: {
           required: "Please enter a password",
           minlength: "Your password must be at least 8 characters long",
@@ -121,60 +99,4 @@
       },
     });
   });
-</script>
-
-<script>
-  const signinForm = document.getElementById("signin-form");
-  const otpSection = document.getElementById("otp-section");
-  const forget = document.getElementById("forget");
-  const present = document.getElementById("present");
-
-  signinForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const mobile = document.getElementById("mobile").value;
-    if (mobile) {
-      sendOTP(mobile);
-      showOTPSection();
-    } else {
-      signinUser();
-    }
-  });
-
-  function sendOTP(mobile) {
-    // TODO: Generate and send OTP to the given mobile number.
-    return true;
-  }
-
-  function showOTPSection() {
-    signinForm.classList.add("d-none");
-    otpSection.classList.remove("d-none");
-    forget.classList.add("d-none");
-    present.classList.remove("d-none");
-  }
-  function normalSection() {
-    otpSection.classList.add("d-none");
-    signinForm.classList.remove("d-none");
-    forget.classList.remove("d-none");
-    present.classList.add("d-none");
-  }
-
-  const verifyOTPButton = document.querySelector(".btn-verify-otp");
-  verifyOTPButton.addEventListener("click", () => {
-    const otp = document.getElementById("otp").value;
-    if (verifyOTP(otp)) {
-      signinUser();
-    } else {
-      alert("Invalid OTP!");
-    }
-  });
-
-  function verifyOTP(otp) {
-    // TODO: Verify the given OTP.
-    return true;
-  }
-
-  function signinUser() {
-    // TODO: Sign in the user.
-    // Redirect to the home page.
-  }
 </script>

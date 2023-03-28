@@ -5,7 +5,7 @@ a {
 }
 .rafcolour {
   background: linear-gradient(
-    112.62deg,
+    89.9deg,
     #0197a6 0.41%,
     #01373d 99.99%,
     #003229 100%
@@ -282,3 +282,28 @@ a {
 }
 
 /* //header2 */
+.pin-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pin-box {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  text-align: center;
+  margin: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.pin-box:focus {
+  border-color: #007bff;
+}
+
+.pin-box:not(:first-child) {
+  pointer-events: none;
+  opacity: 0.5;
+}

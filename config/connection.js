@@ -1,18 +1,18 @@
-const MongoClient = require("mongodb").MongoClient;
-const state = {
-  db: null,
-};
+require("dotenv").config({ path: "../.env" });
+require("custom-env").env(true);
+
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+
 module.exports = {
-  connect: (done) => {
-    const Mongo = MongoClient.connect("mongodb://localhost:27017");
-    Mongo.then(async (client) => {
-      state.db = client.db("fillik");
-      done();
-    }).catch((err) => {
-      console.log("Mongo error:" + err);
-    });
-  },
-  get: () => {
-    return state.db;
+  connect: async () => {
+    try {
+      const conn = await mongoose.connect(
+        `mongodb+srv://danarafha:${process.env.MONGO_PASSWORD}@rafhathdana.yikfxw3.mongodb.net/fillik`
+      );
+      console.log(`Database connected : ${conn.connection.host}`);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };

@@ -1,40 +1,178 @@
-<header><%- include('header') -%></header>
-<div class="mainheading">Add Product</div>
-<div class="container mt-5 mt-md-0">
-  <div class="row justify-content-center align-items-center vh-100">
-    <div class="col-12 col-md-6 col-lg-4">
-      <div class="box p-4">
-        <h1 class="signin-heading mb-4">Sign In</h1>
-        <form>
-          <div class="form-floating mb-3">
-            <input
-              type="email"
-              class="form-control"
-              id="email"
-              placeholder="name@example.com"
-            />
-            <label for="email">Email address</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Password"
-            />
-            <label for="password">Password</label>
-          </div>
-          <div class="d-grid">
-            <button class="btn btn-signin btn-lg mt-3" type="submit">
-              Sign Up
-            </button>
-          </div>
-        </form>
-        <div class="d-flex justify-content-between links">
-          <a href="#" class="text-white">Forgot Password</a>
-          <a href="signup" class="text-white">Create New User</a>
+<body class="rafcolour">
+  <header><%- include('header') -%></header>
+  <div class="mainheading">Users Details</div>
+  <div class="main-div">
+    <!-- CATEGORY -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <div class="category">
+        <h1 class="categoryname">Category</h1>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Top, shirt, t-shirt, pant..."
+        />
+      </div>
+      <div class="category">
+        <h1 class="categoryname">Color:</h1>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Red, white, black, pink..."
+        />
+      </div>
+      <div class="category">
+        <h1 class="categoryname">Pattern:</h1>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Floral, striped, polka dot..."
+        />
+      </div>
+      <div class="category">
+        <h1 class="categoryname">Actual Price:</h1>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter the actual price..."
+        />
+      </div>
+
+      <!-- GENDER -->
+      <div class="gender">
+        <h1 class="categoryname">Gender</h1>
+      </div>
+      <div class="gender">
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            id="male"
+            value="male"
+          />
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            id="female"
+            value="female"
+          />
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            id="other"
+            value="other"
+          />
+          <label class="form-check-label" for="other">Other</label>
         </div>
       </div>
-    </div>
+      <!-- SIZES AND QUANTITY -->
+      <div class="sizes-and-quantity flex-colum">
+        <h1 class="categoryname">Sizes and Quantity</h1>
+        <div class="size">
+          <h2>S</h2>
+          <span class="spanning">:</span>
+          <input type="number" class="form-controling" />
+        </div>
+        <div class="size">
+          <h2>M</h2>
+          <span class="spanning">:</span>
+          <input type="number" class="form-controling" />
+        </div>
+        <div class="size">
+          <h2>L</h2>
+          <span class="spanning">:</span>
+          <input type="number" class="form-controling" />
+        </div>
+        <div class="size">
+          <h2>XL</h2>
+          <span class="spanning">:</span>
+          <input type="number" class="form-controling" />
+        </div>
+      </div>
+      <!-- HTML code using EJS syntax -->
+
+      <div class="form-group">
+        <label class="form-label categoryname" for="image-input"
+          >Main Image</label
+        >
+        <div class="form-file">
+          <input
+            type="file"
+            class="form-file-input"
+            id="images"
+            name="images"
+            accept="image/*"
+            multiple
+            onchange="previewImages(event)"
+          />
+          <label class="form-file-label" for="images">
+            <span class="form-file-text">Choose a file...</span>
+            <span class="form-file-button">Browse</span>
+          </label>
+        </div>
+      </div>
+
+      <div id="preview-container" class="row gx-3 mt-5"></div>
+
+      <!-- Image preview template -->
+      <template id="image-preview-template">
+        <div class="col-md-2">
+          <div class="raf">
+            <img class="raf-img-top" src="" alt="" />
+            <div class="raf-body">
+              <button
+                type="button"
+                class="btn1 btn-sm"
+                onclick="removeImage(event)"
+              >
+                X
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+      <!-- SUBMIT BUTTON -->
+      <button type="submit" class="submitbutton">Add Product</button>
+
+      <!-- Custom JavaScript -->
+      <script>
+        function previewImages(event) {
+          const previewContainer = document.getElementById("preview-container");
+          previewContainer.innerHTML = ""; // Clear previous previews
+          const files = event.target.files;
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onload = function () {
+              const imagePreviewTemplate = document.getElementById(
+                "image-preview-template"
+              );
+              const imagePreview = imagePreviewTemplate.content.cloneNode(true);
+              imagePreview.querySelector("img").src = reader.result;
+              previewContainer.appendChild(imagePreview);
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+
+        function removeImage(event) {
+          const raf = event.target.closest(".raf");
+          raf.remove();
+          const previewContainer = document.getElementById("preview-container");
+          const files = document.getElementById("images").files;
+          if (previewContainer.children.length < files.length) {
+            document.getElementById("images").value = ""; // Clear selected files if images were removed
+          }
+        }
+      </script>
+    </form>
   </div>
-</div>
+</body>

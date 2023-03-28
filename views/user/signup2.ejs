@@ -1,101 +1,308 @@
-
-
-
-
-
+<%- include('../header') -%>
 <body class="rafcolour">
-    <header><%- include('../header') -%></header>
-    <div class="container mt-5 mt-md-0" style="padding-top: 60px">
-      <div class="row justify-content-center align-items-center vh-100">
-        <div class="col-12 col-md-8 col-lg-6">
-          <div class="box p-4">
-            <h1 class="signin-heading mb-4">Sign Up</h1>
-            <form id="signup-form" method="POST" action="/signup">
-              <div class="form-floating mb-3">
+  <div class="container mt-5 mt-md-0" style="padding-top: 60px">
+    <div class="row justify-content-center align-items-center vh-100">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="box p-4">
+          <h1 class="signin-heading mb-4">Sign Up</h1>
+          <form id="signup-form">
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="name@example.com"
+              />
+              <label for="email">Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="fullName"
+                name="fullName"
+                placeholder="Enter Your Full Name"
+              />
+              <label for="fullName">Full Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="mobile"
+                name="mobile"
+                placeholder="Enter mobile number"
+              />
+              <label for="mobile">Mobile number</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Password"
+              />
+              <label for="password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="confirm Password"
+              />
+              <label for="confirmPassword">Confirm Password</label>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-signin btn-lg mt-3" type="submit">
+                Sign Up
+              </button>
+            </div>
+          </form>
+          <div id="otp-section" class="d-none">
+            <div class="form-floating mb-3">
+              <!-- <input
+                type="text"
+                class="form-control"
+                id="otp"
+                name="Otp"
+                placeholder="Enter Otp"
+              /> -->
+              <label for="otp">OTP</label>
+              <div class="pin-input">
+                <% for (let i = 1; i <= 6; i++) { %>
                 <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                  placeholder="name@example.com"
+                  type="number"
+                  class="pin-box"
+                  id="box<%= i %>"
+                  maxlength="1"
                 />
-                <label for="email">Email address</label>
+                <% } %>
               </div>
-              <div class="form-floating mb-3">
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                />
-                <label for="password">Password</label>
-              </div>
-  
-              <div class="d-grid">
-                <button class="btn btn-signin btn-lg mt-3" type="submit">
-                  Sign in
-                </button>
-              </div>
-            </form>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-verify-otp btn-lg mt-3" type="button">
+                Verify OTP
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between links">
+            <a onclick="normalSection()" class="text-white d-none" id="present"
+              >back</a
+            >
           </div>
         </div>
       </div>
     </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $.validator.addMethod(
-        "email",
-        function (value, element) {
-          return (
-            this.optional(element) ||
-            /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(value)
-          );
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $.validator.addMethod(
+      "noSpecialChars",
+      function (value, element) {
+        return this.optional(element) || /^(?!\s)[a-zA-Z ]+$/.test(value);
+      },
+      "Special characters and spaces are not allowed"
+    );
+    $.validator.addMethod(
+      "email",
+      function (value, element) {
+        return (
+          this.optional(element) ||
+          /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(value)
+        );
+      },
+      "Please enter a valid email address"
+    );
+    $.validator.addMethod(
+      "number",
+      function (value, element) {
+        return this.optional(element) || /^(?!0)[0-9]+$/.test(value);
+      },
+      "numbers only allowed"
+    );
+    $("#signup-form").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true,
         },
-        "Please enter a valid email address"
-      );
-      $("#signup-form").validate({
-        rules: {
-          email: {
-            required: true,
-            email: true,
-          },
-  
-          password: {
-            required: true,
-            minlength: 8,
-          },
+        fullName: {
+          required: true,
+          minlength: 3,
+          noSpecialChars: true,
         },
-        messages: {
-          email: {
-            required: "Please enter your email address",
-            email: "Please enter a valid email address",
-          },
-  
-          password: {
-            required: "Please enter a password",
-            minlength: "Your password must be at least 8 characters long",
-          },
+        mobile: {
+          required: true,
+          maxlength: 10,
+          minlength: 10,
+          number: true,
         },
-        highlight: function (element) {
-          $(element).closest(".form-floating").addClass("is-invalid");
+        password: {
+          required: true,
+          minlength: 8,
         },
-        unhighlight: function (element) {
-          $(element).closest(".form-floating").removeClass("is-invalid");
+        confirmPassword: {
+          required: true,
+          equalTo: "#password",
         },
-        errorElement: "div",
-        errorClass: "invalid-feedback",
-        errorPlacement: function (error, element) {
-          if (element.parent(".input-group").length) {
-            error.insertAfter(element.parent());
-          } else {
-            error.insertAfter(element);
-          }
+      },
+      messages: {
+        email: {
+          required: "Please enter your email address",
+          email: "Please enter a valid email address",
         },
-      });
+        fullName: {
+          required: "Please enter your full name",
+          minlength: "Your name must be at least 3 characters long",
+          noSpecialChars: "Special characters and spaces are not allowed",
+        },
+        mobile: {
+          required: "Please enter Mobile Number",
+          minlength: "10 digit indian number should be there",
+          maxlength: "maximum 10 digit allowed in indian number",
+          number: "only numbers allowed",
+        },
+        password: {
+          required: "Please enter a password",
+          minlength: "Your password must be at least 8 characters long",
+        },
+        confirmPassword: {
+          required: "Please confirm your password",
+          equalTo: "Your passwords do not match",
+        },
+      },
+      highlight: function (element) {
+        $(element).closest(".form-floating").addClass("is-invalid");
+      },
+      unhighlight: function (element) {
+        $(element).closest(".form-floating").removeClass("is-invalid");
+      },
+      errorElement: "div",
+      errorClass: "invalid-feedback",
+      errorPlacement: function (error, element) {
+        if (element.parent(".input-group").length) {
+          error.insertAfter(element.parent());
+        } else {
+          error.insertAfter(element);
+        }
+      },
     });
-  </script>
-  
+    $(".pin-box").keyup(function () {
+      if ($(this).val().length === $(this).attr("maxlength")) {
+        $(this).next().focus();
+      }
+    });
+  });
+</script>
+
+<script>
+  const signupForm = document.getElementById("signup-form");
+  const otpSection = document.getElementById("otp-section");
+  const present = document.getElementById("present");
+  signupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const validator = $("#signup-form").validate();
+    if (validator.valid()) {
+      const mobile = document.getElementById("mobile").value;
+      if (mobile) {
+        sendOTP(mobile);
+      } else {
+        normalSection();
+      }
+    }
+  });
+  function sendOTP(mobile) {
+    fetch("/sendotp", {
+      method: "POST",
+      body: JSON.stringify({
+        mobile: mobile,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json(); // get the response body
+      })
+      .then((data) => {
+        console.log(data);
+
+        if (data.success) {
+          console.log(data);
+
+          showOTPSection();
+          // OTP verification successful, submit the form
+          // document.querySelector('form').submit();
+        } else {
+          console.log(data);
+          normalSection();
+          // OTP verification failed, display an error message
+          alert("OTP Not sended. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(
+          "An error occurred while sending verifying OTP. Please try again later."
+        );
+      });
+  }
+
+  function showOTPSection() {
+    signupForm.classList.add("d-none");
+    otpSection.classList.remove("d-none");
+    present.classList.remove("d-none");
+  }
+  function normalSection() {
+    otpSection.classList.add("d-none");
+    signupForm.classList.remove("d-none");
+    present.classList.add("d-none");
+  }
+  const verifyOTPButton = document.querySelector(".btn-verify-otp");
+  verifyOTPButton.addEventListener("click", () => {
+    const otp = document.getElementById("otp").value;
+    if (verifyotp(otp)) {
+      signinUser();
+    } else {
+      alert("Invalid OTP!");
+    }
+  });
+
+  function verifyOTP(otp) {}
+  function signinUser() {
+    const email = document.getElementById("email").value;
+    const fullName = document.getElementById("fullName").value;
+    const mobile = document.getElementById("mobile").value;
+    const password = document.getElementById("password").value;
+    fetch("/signup", {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        fullName: fullName,
+        mobile: mobile,
+        password: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = "/login";
+        } else {
+          alert("An error occurred. Please try again later.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("An error occurred. Please try again later.");
+      });
+  }
+</script>

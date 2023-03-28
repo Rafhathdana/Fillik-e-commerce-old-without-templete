@@ -1,26 +1,38 @@
 var express = require("express");
 var router = express.Router();
-const userconnect = require("../helpers/userconnect");
-const otp = require("../helpers/otp");
+const userController = require("../controllers/userControllers");
+const otp = require("../controllers/otp");
 /* GET home page. */
+function userauth(req, res, next) {
+  if (req.session.user.loggedIn) {
+    res.redirect("/home");
+  } else {
+    next();
+  }
+}
+function verify(req, res, next) {
+  if (req.session.user.loggedIn) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+}
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
-router.get("/login", function (req, res, next) {
-  res.render("user/login", { title: "Express" });
+router.get("/signup", userauth, function (req, res, next) {
+  res.render("user/signup", { title: "user", err_msg: req.session.errmsg });
+  req.session.errmsg = null;
 });
-router.get("/signup", function (req, res, next) {
-  res.render("user/signup", { title: "Express" });
+router.get("/login", userauth, function (req, res, next) {
+  res.render("user/login", { title: "user", err_msg: req.session.errmsg });
+  req.session.errmsg = null;
 });
-router.post("/signup", (req, res, next) => {
-  req.session.signupvalues = req.body;
-
-  userconnect.doSignup(req.body).then((response) => {
-    if (response.statuss) {
-      res.redirect("/signin");
-    }
-  });
+router.get("/home", function (req, res, next) {
+  res.render("user/productlist", { products });
 });
+router.post("/signup", userauth, userController.postSignup);
+router.post("/login", userauth, userController.postSignin);
 router.post("/sendotp", (req, res, next) => {
   console.log(req.body.mobile);
   req.session.otP = Math.floor(100000 + Math.random() * 900000);
@@ -36,7 +48,5 @@ router.post("/sendotp", (req, res, next) => {
       res.status(500).send({ success: false, message: "Error sending OTP" });
     });
 });
-router.get("/product", function (req, res, next) {
-  res.render("user/productlist", { products });
-});
+
 module.exports = router;
