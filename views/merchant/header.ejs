@@ -15,11 +15,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
+
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.min.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/adsty.css" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
@@ -36,7 +37,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+          <span class="navbar-toggler-icon navbar-toggler-icon-bars"></span>
         </button>
         <div
           class="collapse navbar-collapse justify-content-between"
@@ -44,10 +45,10 @@
         >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <div class="nav-link"></div>
+              <a class="nav-link" href="#"><i class="bi bi-person"></i></a>
             </li>
           </ul>
-          <form class="d-flex">
+          <!-- <form class="d-flex">
             <input
               class="form-control me-2"
               type="search"
@@ -55,9 +56,9 @@
               aria-label="Search"
             />
             <button class="btn btn-outline-light" type="submit">Search</button>
-          </form>
+          </form> -->
           <ul class="navbar-nav">
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -75,22 +76,44 @@
                 <li><a class="dropdown-item" href="#">Women’s Tops</a></li>
                 <li><a class="dropdown-item" href="#">Women’s T-shirts</a></li>
                 <li><a class="dropdown-item" href="#">Women’s Pants</a></li>
-                <!-- <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li> -->
+               
               </ul>
-            </li>
+            </li> -->
             <% if(loggedin) { %>
             <li class="nav-item">
-              <a class="nav-link" href="#">Cart</a>
+              <% if (title==="product"){ %>
+              <a class="nav-link" href="addproduct">Add Product</a>
+              <%} else{ %><a class="nav-link" href="products">Products</a>
+              <% } %>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><%=user.fullName%></a>
+              <a class="nav-link" href="#">order</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <%= brandName %>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">profile</a></li>
+                <li><a class="dropdown-item" href="#">change Password</a></li>
+                <li>
+                  <a class="dropdown-item" href="/merchant/logout">logout</a>
+                </li>
+              </ul>
             </li>
             <%} else{ %>
             <li class="nav-item">
-              <a class="nav-link" href="#">Cart</a>
+              <a class="nav-link" href="signup">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="login">Login</a>

@@ -5,8 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var usersRouter = require("./routes/user");
-var adminRouter = require("./routes/admin");
-var supRouter = require("./routes/supadmin");
+var merchantRouter = require("./routes/merchant");
+var supRouter = require("./routes/admin");
 
 var app = express();
 var db = require("./config/connection");
@@ -26,8 +26,10 @@ db.connect((err) => {
   if (err) console.log("Connection Error" + err);
 });
 app.use("/", usersRouter);
-app.use("/merchant", adminRouter);
-app.use("/superadmin", supRouter);
+app.use("/merchant", merchantRouter);
+app.use("/admin", supRouter);
+
+app.set("view cache", false);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

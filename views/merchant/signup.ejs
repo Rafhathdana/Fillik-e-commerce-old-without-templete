@@ -1,11 +1,11 @@
-<%- include('../header') -%>
 <body class="rafcolour">
+  <header><%- include('header') -%></header>
   <div class="container mt-5 mt-md-0" style="padding-top: 60px">
     <div class="row justify-content-center align-items-center vh-100">
       <div class="col-12 col-md-8 col-lg-6">
         <div class="box p-4">
-          <h1 class="signin-heading mb-4">Sign Up</h1>
-          <form id="signup-form" action="/admin/signup" method="Post">
+          <h1 class="signin-heading mb-4">Merchant Sign Up</h1>
+          <form id="signup-form" action="/merchant/signup" method="Post">
             <div class="form-floating mb-3">
               <input
                 type="email"
@@ -20,11 +20,21 @@
               <input
                 type="text"
                 class="form-control"
-                id="fullName"
-                name="fullName"
-                placeholder="Enter Your Full Name"
+                id="brandName"
+                name="brandName"
+                placeholder="John Doe"
               />
-              <label for="fullName">Full Name</label>
+              <label for="name">Brand Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="outletName"
+                name="outletName"
+                placeholder="1234567890"
+              />
+              <label for="outletName">Outlet Name</label>
             </div>
             <div class="form-floating mb-3">
               <input
@@ -32,9 +42,39 @@
                 class="form-control"
                 id="mobile"
                 name="mobile"
-                placeholder="Enter mobile number"
+                placeholder="1234567890"
               />
-              <label for="mobile">Mobile number</label>
+              <label for="mobile">Mobile Number</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="regNumber"
+                name="regNumber"
+                placeholder="1234567890"
+              />
+              <label for="regNumber">Reg Number</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="gpsCoordinates"
+                name="gpsCoordinates"
+                placeholder="1234567890"
+              />
+              <label for="gpsCoordinates">Gps Co-ordinates</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="pin"
+                name="pin"
+                placeholder="567890"
+              />
+              <label for="pin">Pin</label>
             </div>
             <div class="form-floating mb-3">
               <input
@@ -69,6 +109,7 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
 <script>
   $(document).ready(function () {
     $.validator.addMethod(
@@ -101,7 +142,12 @@
           required: true,
           email: true,
         },
-        fullName: {
+        brandName: {
+          required: true,
+          minlength: 3,
+          noSpecialChars: true,
+        },
+        outletName: {
           required: true,
           minlength: 3,
           noSpecialChars: true,
@@ -110,6 +156,21 @@
           required: true,
           maxlength: 10,
           minlength: 10,
+          number: true,
+        },
+        regNumber: {
+          required: true,
+          maxlength: 25,
+          minlength: 6,
+          number: true,
+        },
+        gpsCoordinates: {
+          required: true,
+        },
+        pin: {
+          required: true,
+          minlength: 6,
+          maxlength: 6,
           number: true,
         },
         password: {
@@ -126,7 +187,7 @@
           required: "Please enter your email address",
           email: "Please enter a valid email address",
         },
-        fullName: {
+        brandName: {
           required: "Please enter your full name",
           minlength: "Your name must be at least 3 characters long",
           noSpecialChars: "Special characters and spaces are not allowed",
@@ -135,6 +196,22 @@
           required: "Please enter Mobile Number",
           minlength: "10 digit indian number should be there",
           maxlength: "maximum 10 digit allowed in indian number",
+          number: "only numbers allowed",
+        },
+        regNumber: {
+          required: "Please enter Register Number",
+          minlength: "minimum 6 digit register number is there for your outlet",
+          maxlength:
+            "maximum 25 digit register number is there for your outlet",
+          number: "only numbers allowed",
+        },
+        gpsCoordinates: {
+          required: "Please enter gps Coordinates",
+        },
+        pin: {
+          required: "Please enter pin Number",
+          minlength: "6 digit indian post office number should be there",
+          maxlength: "6 digit indian post office number should be there",
           number: "only numbers allowed",
         },
         password: {
@@ -161,6 +238,11 @@
           error.insertAfter(element);
         }
       },
+    });
+    $(".pin-box").keyup(function () {
+      if ($(this).val().length === $(this).attr("maxlength")) {
+        $(this).next().focus();
+      }
     });
   });
 </script>

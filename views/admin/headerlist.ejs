@@ -24,7 +24,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"
+        <a class="navbar-brand" href="/"
           ><img src="/images/icon.png" class="icon-head"
         /></a>
         <button
@@ -69,7 +69,11 @@
                 Sort
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Men’s Shirts</a></li>
+                <li>
+                  <a class="dropdown-item" href="/productlist/Men+shirt"
+                    >Men’s Shirts</a
+                  >
+                </li>
                 <li><a class="dropdown-item" href="#">Men’s T-Shirts</a></li>
                 <li><a class="dropdown-item" href="#">Men’s Pants</a></li>
                 <li><a class="dropdown-item" href="#">Women’s Tops</a></li>
@@ -171,7 +175,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Users</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -183,12 +187,11 @@
                 Master
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
-                <!-- <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li> -->
+                <li><a class="dropdown-item" href="#">profile</a></li>
+                <li><a class="dropdown-item" href="#">change Password</a></li>
+                <li>
+                  <a class="dropdown-item" href="/admin/logout">logout</a>
+                </li>
               </ul>
             </li>
           </ul>

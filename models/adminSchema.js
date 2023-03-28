@@ -3,24 +3,8 @@ const Schema = mongoose.Schema;
 
 const adminSchema = new Schema(
   {
-    brandName: {
+    fullName: {
       type: String,
-      required: true,
-    },
-    outletName: {
-      type: String,
-      required: true,
-    },
-    regNumber: {
-      type: String,
-      required: true,
-    },
-    gpsCoordinates: {
-      type: String,
-      required: true,
-    },
-    pin: {
-      type: Number,
       required: true,
     },
     email: {
@@ -35,53 +19,6 @@ const adminSchema = new Schema(
       type: String,
       required: true,
     },
-    productlist: [
-      {
-        type: Object,
-        productid: {
-          type: String,
-        },
-        name: {
-          type: String,
-        },
-        description: {
-          type: String,
-        },
-        category: {
-          type: String,
-        },
-        color: {
-          type: String,
-        },
-        pattern: {
-          type: String,
-        },
-        actualPrice: {
-          type: String,
-        },
-        gender: {
-          type: String,
-        },
-        Quantity: {
-          type: Object,
-          small: {
-            type: Number,
-          },
-          medium: {
-            type: Number,
-          },
-          large: {
-            type: Number,
-          },
-          extraLarge: {
-            type: Number,
-          },
-        },
-        images: {
-          type: Array,
-        },
-      },
-    ],
     status: {
       type: Boolean,
       required: true,
@@ -104,4 +41,4 @@ const adminSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("admin", adminSchema);
+module.exports = mongoose.model("Admin", adminSchema);

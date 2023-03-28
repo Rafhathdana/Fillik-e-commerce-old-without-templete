@@ -23,10 +23,6 @@ const userSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    lastloggedIn: {
-      type: String,
-      required: true,
-    },
     emailverified: {
       type: Boolean,
       required: true,

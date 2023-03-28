@@ -4,13 +4,14 @@
     <div class="row justify-content-center align-items-center vh-100">
       <div class="col-12 col-md-8 col-lg-6">
         <div class="box p-4">
-          <h1 class="signin-heading mb-4">MASTER ADMIN</h1>
-          <form id="signin-form">
+          <h1 class="signin-heading mb-4">Merchant Sign In</h1>
+          <form id="signin-form" action="/merchant/login" method="post">
             <div class="form-floating mb-3">
               <input
                 type="email"
                 class="form-control"
                 id="email"
+                name="email"
                 placeholder="name@example.com"
               />
               <label for="email">Email address</label>
@@ -20,16 +21,27 @@
                 type="password"
                 class="form-control"
                 id="password"
+                name="password"
                 placeholder="Password"
               />
               <label for="password">Password</label>
             </div>
+            <% if(locals.err_msg) { %>
+            <div class="alert alert-danger mt-2" role="alert" }>
+              <%=err_msg %>
+            </div>
+            <% } %>
             <div class="d-grid">
               <button class="btn btn-signin btn-lg mt-3" type="submit">
                 Sign In
               </button>
             </div>
           </form>
+
+          <div class="d-flex justify-content-between links">
+            <a href="#" class="text-white" id="forget">Forgot Password</a>
+            <a href="signup" class="text-white">Create New User</a>
+          </div>
         </div>
       </div>
     </div>
@@ -55,7 +67,6 @@
           required: true,
           email: true,
         },
-
         password: {
           required: true,
           minlength: 8,
@@ -66,7 +77,6 @@
           required: "Please enter your email address",
           email: "Please enter a valid email address",
         },
-
         password: {
           required: "Please enter a password",
           minlength: "Your password must be at least 8 characters long",

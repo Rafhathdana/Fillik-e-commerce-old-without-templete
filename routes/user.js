@@ -19,18 +19,34 @@ function verify(req, res, next) {
   }
 }
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "Express", loggedin: false });
 });
 router.get("/signup", userauth, function (req, res, next) {
-  res.render("user/signup", { title: "user", err_msg: req.session.errmsg });
+  res.render("user/signup", {
+    title: "user",
+    err_msg: req.session.errmsg,
+    loggedin: false,
+  });
   req.session.errmsg = null;
 });
 router.get("/login", userauth, function (req, res, next) {
-  res.render("user/login", { title: "user", err_msg: req.session.errmsg });
+  res.render("user/login", {
+    title: "user",
+    err_msg: req.session.errmsg,
+    loggedin: false,
+  });
   req.session.errmsg = null;
 });
 router.get("/home", function (req, res, next) {
-  res.render("user/productlist", { products });
+  res.render("user/productlist", {
+    loggedin: req.session.userLoggedIn,
+    user: req.session.user,
+  });
+});
+router.get("/productlist/:productname", function (req, res, next) {
+  res.render("user/productlist", {
+    loggedin: false,
+  });
 });
 router.post("/signup", userauth, userController.postSignup);
 router.post("/login", userauth, userController.postSignin);

@@ -1,0 +1,66 @@
+<%- include('headerlist') -%>
+<div class="heading">Users Details</div>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Full Name</th>
+        <th>No. of Orders</th>
+        <th>Complaints</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i < userslist.length; i++) { %>
+      <tr>
+        <td><%= userslist[i].email %></td>
+        <td><%= userslist[i].fullName %></td>
+        <td>0</td>
+        <td>
+          <div class="complaint-box">
+            <span class="complaint-number">2</span>
+          </div>
+        </td>
+        <td>
+          <div class="d-flex">
+            <div
+              class="action-box mx-3"
+              onclick="confirmStatus('<%= userslist[i]._id %>')"
+            >
+              <span class="action-text"
+                ><% if(userslist[i].isActive){%> Block <% } else { %> UNBLOCK <%
+                } %>
+              </span>
+            </div>
+            <div class="action-box">
+              <a href="#" class="details-link">Details</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<script>
+  function confirmStatus(userId) {
+    if (confirm("Are you sure you want to Block this user?")) {
+      fetch(`statusUpdate/${userId}`, { method: "POST" })
+        .then((res) => {
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            alert("unable to update user");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Internal server error");
+        });
+    } else {
+      // User cancelled, do nothing
+      console.log("User cancelled Blocking of user ID", userId);
+    }
+  }
+</script>

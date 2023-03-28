@@ -33,13 +33,16 @@ module.exports = {
             req.session.user = newUser;
             req.session.userLoggedIn = true;
             console.log(newUser);
-            res.redirect("/");
+            res.redirect("/home");
           } else {
             console.log("password is not matching");
             req.session.errmsg = "Invalid Username or Password";
             res.status(400).redirect("/login");
           }
         });
+      } else {
+        req.session.errmsg = "Invalid Username or Password";
+        res.status(400).redirect("/login");
       }
     } catch (error) {
       console.log(error);
