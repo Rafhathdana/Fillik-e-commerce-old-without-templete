@@ -5,12 +5,13 @@
       <div class="col-12 col-md-8 col-lg-6">
         <div class="box p-4">
           <h1 class="signin-heading mb-4">Merchant Sign Up</h1>
-          <form>
+          <form id="signup-form" action="/merchant/signup" method="Post">
             <div class="form-floating mb-3">
               <input
                 type="email"
                 class="form-control"
                 id="email"
+                name="email"
                 placeholder="name@example.com"
               />
               <label for="email">Email address</label>
@@ -20,6 +21,7 @@
                 type="text"
                 class="form-control"
                 id="brandName"
+                name="brandName"
                 placeholder="John Doe"
               />
               <label for="name">Brand Name</label>
@@ -28,16 +30,18 @@
               <input
                 type="text"
                 class="form-control"
-                id="mobile"
+                id="outletName"
+                name="outletName"
                 placeholder="1234567890"
               />
-              <label for="mobile">Outlet Name</label>
+              <label for="outletName">Outlet Name</label>
             </div>
             <div class="form-floating mb-3">
               <input
                 type="text"
                 class="form-control"
                 id="mobile"
+                name="mobile"
                 placeholder="1234567890"
               />
               <label for="mobile">Mobile Number</label>
@@ -46,34 +50,38 @@
               <input
                 type="text"
                 class="form-control"
-                id="mobile"
+                id="regNumber"
+                name="regNumber"
                 placeholder="1234567890"
               />
-              <label for="mobile">Reg Number</label>
+              <label for="regNumber">Reg Number</label>
             </div>
             <div class="form-floating mb-3">
               <input
                 type="text"
                 class="form-control"
-                id="mobile"
+                id="gpsCoordinates"
+                name="gpsCoordinates"
                 placeholder="1234567890"
               />
-              <label for="mobile">Gps Co-ordinates</label>
+              <label for="gpsCoordinates">Gps Co-ordinates</label>
             </div>
             <div class="form-floating mb-3">
               <input
                 type="text"
                 class="form-control"
-                id="mobile"
+                id="pin"
+                name="pin"
                 placeholder="567890"
               />
-              <label for="mobile">Pin</label>
+              <label for="pin">Pin</label>
             </div>
             <div class="form-floating mb-3">
               <input
                 type="password"
                 class="form-control"
                 id="password"
+                name="password"
                 placeholder="Password"
               />
               <label for="password">Password</label>
@@ -83,6 +91,7 @@
                 type="password"
                 class="form-control"
                 id="confirmPassword"
+                name="confirmPassword"
                 placeholder="confirm Password"
               />
               <label for="confirmPassword">Confirm Password</label>
@@ -98,3 +107,142 @@
     </div>
   </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $.validator.addMethod(
+      "noSpecialChars",
+      function (value, element) {
+        return this.optional(element) || /^(?!\s)[a-zA-Z ]+$/.test(value);
+      },
+      "Special characters and spaces are not allowed"
+    );
+    $.validator.addMethod(
+      "email",
+      function (value, element) {
+        return (
+          this.optional(element) ||
+          /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(value)
+        );
+      },
+      "Please enter a valid email address"
+    );
+    $.validator.addMethod(
+      "number",
+      function (value, element) {
+        return this.optional(element) || /^(?!0)[0-9]+$/.test(value);
+      },
+      "numbers only allowed"
+    );
+    $("#signup-form").validate({
+      rules: {
+        email: {
+          required: true,
+          email: true,
+        },
+        brandName: {
+          required: true,
+          minlength: 3,
+          noSpecialChars: true,
+        },
+        outletName: {
+          required: true,
+          minlength: 3,
+          noSpecialChars: true,
+        },
+        mobile: {
+          required: true,
+          maxlength: 10,
+          minlength: 10,
+          number: true,
+        },
+        regNumber: {
+          required: true,
+          maxlength: 25,
+          minlength: 6,
+          number: true,
+        },
+        gpsCoordinates: {
+          required: true,
+        },
+        pin: {
+          required: true,
+          minlength: 6,
+          maxlength: 6,
+          number: true,
+        },
+        password: {
+          required: true,
+          minlength: 8,
+        },
+        confirmPassword: {
+          required: true,
+          equalTo: "#password",
+        },
+      },
+      messages: {
+        email: {
+          required: "Please enter your email address",
+          email: "Please enter a valid email address",
+        },
+        brandName: {
+          required: "Please enter your full name",
+          minlength: "Your name must be at least 3 characters long",
+          noSpecialChars: "Special characters and spaces are not allowed",
+        },
+        mobile: {
+          required: "Please enter Mobile Number",
+          minlength: "10 digit indian number should be there",
+          maxlength: "maximum 10 digit allowed in indian number",
+          number: "only numbers allowed",
+        },
+        regNumber: {
+          required: "Please enter Register Number",
+          minlength: "minimum 6 digit register number is there for your outlet",
+          maxlength:
+            "maximum 25 digit register number is there for your outlet",
+          number: "only numbers allowed",
+        },
+        gpsCoordinates: {
+          required: "Please enter gps Coordinates",
+        },
+        pin: {
+          required: "Please enter pin Number",
+          minlength: "6 digit indian post office number should be there",
+          maxlength: "6 digit indian post office number should be there",
+          number: "only numbers allowed",
+        },
+        password: {
+          required: "Please enter a password",
+          minlength: "Your password must be at least 8 characters long",
+        },
+        confirmPassword: {
+          required: "Please confirm your password",
+          equalTo: "Your passwords do not match",
+        },
+      },
+      highlight: function (element) {
+        $(element).closest(".form-floating").addClass("is-invalid");
+      },
+      unhighlight: function (element) {
+        $(element).closest(".form-floating").removeClass("is-invalid");
+      },
+      errorElement: "div",
+      errorClass: "invalid-feedback",
+      errorPlacement: function (error, element) {
+        if (element.parent(".input-group").length) {
+          error.insertAfter(element.parent());
+        } else {
+          error.insertAfter(element);
+        }
+      },
+    });
+    $(".pin-box").keyup(function () {
+      if ($(this).val().length === $(this).attr("maxlength")) {
+        $(this).next().focus();
+      }
+    });
+  });
+</script>

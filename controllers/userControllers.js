@@ -31,7 +31,7 @@ module.exports = {
           if (status) {
             console.log("user exist");
             req.session.user = newUser;
-            req.session.user.loggedIn = true;
+            req.session.userLoggedIn = true;
             console.log(newUser);
             res.redirect("/");
           } else {
