@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const userController = require("../controllers/userControllers");
 const otp = require("../controllers/otp");
+const multer = require("multer");
 
 /* GET home page. */
 function userauth(req, res, next) {
@@ -43,10 +44,13 @@ router.get("/home", function (req, res, next) {
     user: req.session.user,
   });
 });
-router.get("/productlist/:productname", function (req, res, next) {
+router.get("/productlist/:productname", (req, res, next) => {
   res.render("user/productlist", {
     loggedin: false,
   });
+});
+router.get("/productview", (req, res, next) => {
+  res.render("user/productView", { loggedin: false });
 });
 router.post("/signup", userauth, userController.postSignup);
 router.post("/login", userauth, userController.postSignin);
@@ -72,6 +76,29 @@ router.get("/logout", function (req, res) {
     } else {
       res.redirect("/");
     }
+  });
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post("/upload", upload.array("images"), function (req, res) {
+  console.log(req.files);
+  res.send("Images uploaded!");
+});
+router.get("/upload", upload.array("images"), function (req, res) {
+  res.render("merchant/images", {
+    title: "user",
+    err_msg: req.session.errmsg,
+    loggedin: false,
   });
 });
 module.exports = router;

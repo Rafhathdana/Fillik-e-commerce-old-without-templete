@@ -1,18 +1,24 @@
-var SuperAdmin = require("../models/merchantSchema");
+var Admin = require("../models/adminSchema");
+const mongoose = require("mongoose");
 var users = require("../models/userSchema");
+var merchants = require("../models/merchantSchema");
+var filterproduct = require("../models/filterSchema");
+const {
+  Types: { ObjectId },
+} = require("mongoose");
 const bcrypt = require("bcrypt");
 const { response } = require("../app");
 module.exports = {
   adminauth: (req, res, next) => {
-    if (req.session && req.session.admin && req.session.SuperAdminloggedIn) {
+    if (req.session && req.session.admin && req.session.adminLoggedIn) {
       res.redirect("/admin/home");
     } else {
       next();
     }
   },
   verify: (req, res, next) => {
-    if (req.session && req.session.admin && req.session.SuperAdminloggedIn) {
-      console.log(req.session.SuperAdminloggedIn);
+    if (req.session && req.session.admin && req.session.adminLoggedIn) {
+      console.log(req.session.adminLoggedIn);
       next();
     } else {
       res.redirect("/admin/login");
@@ -23,8 +29,26 @@ module.exports = {
     res.render("admin/users", {
       title: "users",
       fullName: req.session.admin.fullName,
-      loggedin: req.session.SuperAdminloggedIn,
+      loggedin: req.session.adminLoggedIn,
       userslist,
+    });
+  },
+  getUser: async (req, res, next) => {
+    const userslist = await users.find().limit(10);
+    res.render("admin/users", {
+      title: "admin",
+      fullName: req.session.admin.fullName,
+      loggedin: req.session.adminLoggedIn,
+      userslist,
+    });
+  },
+  getMerchant: async (req, res, next) => {
+    const merchantslist = await merchants.find().limit(10);
+    res.render("admin/merchants", {
+      title: "admin",
+      fullName: req.session.admin.fullName,
+      loggedin: req.session.adminLoggedIn,
+      merchantslist,
     });
   },
   getLogin: (req, res, next) => {
@@ -35,34 +59,6 @@ module.exports = {
     });
     req.session.errmsg = null;
   },
-  postSignin: async (req, res) => {
-    try {
-      const newSuperAdmin = await SuperAdmin.findOne({ email: req.body.email });
-      console.log(req.body.email);
-      if (newSuperAdmin) {
-        bcrypt
-          .compare(req.body.password, newSuperAdmin.password)
-          .then((status) => {
-            if (status) {
-              console.log("user exist");
-              req.session.admin = newSuperAdmin;
-              req.session.SuperAdminloggedIn = true;
-              console.log(newSuperAdmin);
-              res.redirect("/admin/home");
-            } else {
-              console.log("password is not matching");
-              req.session.errmsg = "Invalid Username or Password";
-              res.status(400).redirect("/admin/login");
-            }
-          });
-      } else {
-        req.session.errmsg = "Invalid Username or Password";
-        res.status(400).redirect("/login");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  },
   getSignUp: (req, res, next) => {
     res.render("admin/signup", {
       title: "admin",
@@ -71,10 +67,72 @@ module.exports = {
     });
     req.session.errmsg = null;
   },
+  getAddCategory: (req, res, next) => {
+    res.render("admin/addCategory", {
+      title: "addCategory",
+      fullName: req.session.admin.fullName,
+      loggedin: req.session.adminLoggedIn,
+      categoryout: req.session.categoryout,
+    });
+    req.session.categoryout = null;
+  },
+
+  postAddCategory: async (req, res, next) => {
+    try {
+      console.log(req.body.categorytype);
+      console.log(req.body.categoryvalue);
+      const newCategory = await filterproduct.findOne({
+        categoryname: req.body.categorytype,
+        values: req.body.categoryvalue,
+      });
+      if (!newCategory) {
+        const newData = new filterproduct({
+          categoryname: req.body.categorytype,
+          values: req.body.categoryvalue,
+        });
+        filterproduct.create(newData);
+        req.session.categoryout = "Added";
+        res.status(204).redirect("/admin/addcategory");
+      } else {
+        req.session.categoryout = "already value found";
+        res.status(400).redirect("/admin/addcategory");
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400);
+    }
+  },
+  postSignin: async (req, res) => {
+    try {
+      const newAdmin = await Admin.findOne({ email: req.body.email });
+      console.log(req.body.email);
+      if (newAdmin) {
+        bcrypt.compare(req.body.password, newAdmin.password).then((status) => {
+          if (status) {
+            console.log("user exist");
+            req.session.admin = newAdmin;
+            req.session.adminLoggedIn = true;
+            console.log(newAdmin);
+            res.redirect("/admin/home");
+          } else {
+            console.log("password is not matching");
+            req.session.errmsg = "Invalid Username or Password";
+            res.status(400).redirect("/admin/login");
+          }
+        });
+      } else {
+        req.session.errmsg = "Invalid Username or Password";
+        res.status(400).redirect("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   postSignup: async (req, res) => {
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const newSuperAdmin = new SuperAdmin({
+      const newAdmin = new Admin({
         fullName: req.body.fullName,
         email: req.body.email,
         password: hashedPassword,
@@ -84,36 +142,67 @@ module.exports = {
         mobileverification: true,
         isActive: true,
       });
-      SuperAdmin.create(newSuperAdmin);
-      console.log(newSuperAdmin);
+      Admin.create(newAdmin);
+      console.log(newAdmin);
       res.redirect("/admin/login");
     } catch (error) {
       console.log(error);
       res.redirect("/admin/signup");
     }
   },
-  statusUpdate: async (req, res, next) => {
-    console.log(req.body.userId);
-    const datainuser = await users.findOne({ _id: new ObjectId(userId) });
-    console.log(datainuser);
-    if (datainuser && datainuser.isActive) {
-      value = false;
-    } else {
-      value = true;
+  statusUserUpdate: async (req, res, next) => {
+    try {
+      const datainuser = await users.findById(req.params.userId);
+      console.log(datainuser); // Check if datainuser is being logged correctly
+
+      let value;
+      if (datainuser && datainuser.isActive) {
+        value = false;
+      } else {
+        value = true;
+      }
+      users
+        .findOneAndUpdate(
+          { _id: req.params.userId },
+          { isActive: value },
+          { new: true }
+        )
+        .then((updatedUser) => {
+          res.sendStatus(204);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.error(err);
     }
-    users
-      .findOneAndUpdate(
-        { _id: req.body.userId },
-        { isActive: value },
-        { new: true }
-      )
-      .then((updatedUser) => {
-        console.log(updatedUser);
-        return true;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  },
+  statusMerchantUpdate: async (req, res, next) => {
+    try {
+      const datainuser = await merchants.findById(req.params.userId);
+      console.log(datainuser); // Check if datainuser is being logged correctly
+
+      let value;
+      if (datainuser && datainuser.isActive) {
+        value = false;
+      } else {
+        value = true;
+      }
+      merchants
+        .findOneAndUpdate(
+          { _id: req.params.userId },
+          { isActive: value },
+          { new: true }
+        )
+        .then((updatedUser) => {
+          res.sendStatus(204);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.error(err);
+    }
   },
   logout: (req, res) => {
     req.session.destroy(function (err) {

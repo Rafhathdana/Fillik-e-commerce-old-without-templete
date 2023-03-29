@@ -1,5 +1,5 @@
 <%- include('headerlist') -%>
-<div class="heading">Users Details</div>
+<div class="heading">Merchants Details</div>
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -12,10 +12,10 @@
       </tr>
     </thead>
     <tbody>
-      <% for (let i = 0; i < userslist.length; i++) { %>
+      <% for (let i = 0; i < merchantslist.length; i++) { %>
       <tr>
-        <td><%= userslist[i].email %></td>
-        <td><%= userslist[i].fullName %></td>
+        <td><%= merchantslist[i].email %></td>
+        <td><%= merchantslist[i].fullName %></td>
         <td>0</td>
         <td>
           <div class="complaint-box">
@@ -24,17 +24,17 @@
         </td>
         <td>
           <div class="d-flex">
-            <% if(userslist[i].isActive){%>
+            <% if(merchantslist[i].isActive){%>
             <div
               class="action-box mx-3"
-              onclick="confirmStatus('<%= userslist[i]._id %>')"
+              onclick="confirmStatus('<%= merchantslist[i]._id %>')"
             >
               <span class="action-text">Block </span>
             </div>
             <% } else { %>
             <div
               class="action-box red mx-3"
-              onclick="confirmStatus('<%= userslist[i]._id %>')"
+              onclick="confirmStatus('<%= merchantslist[i]._id %>')"
             >
               <span class="action-text">Unblock </span>
             </div>
@@ -53,7 +53,7 @@
 <script>
   function confirmStatus(userId) {
     if (confirm("Are you sure you want to Block this user?")) {
-      fetch(`statusUserUpdate/${userId}`, { method: "POST" })
+      fetch(`statusMerchantUpdate/${userId}`, { method: "POST" })
         .then((res) => {
           if (res.ok) {
             window.location.reload();

@@ -1,56 +1,61 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const merchantSchema = new Schema(
+const productSchema = new Schema(
   {
-    brandName: {
+    productid: {
       type: String,
       required: true,
     },
-    outletName: {
+    name: {
       type: String,
       required: true,
     },
-    regNumber: {
+    description: {
       type: String,
       required: true,
     },
-    gpsCoordinates: {
+    category: {
       type: String,
       required: true,
     },
-    pin: {
+    color: {
+      type: String,
+      required: true,
+    },
+    pattern: {
+      type: String,
+      required: true,
+    },
+    actualPrice: {
       type: Number,
       required: true,
     },
-    email: {
+    sellPrice: {
+      type: Number,
+      required: true,
+    },
+    gender: {
       type: String,
       required: true,
     },
-    mobile: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    productId: [
-      {
-        type: Array,
+    Quantity: {
+      type: Object,
+      small: {
+        type: Number,
       },
-    ],
-    status: {
-      type: Boolean,
-      required: true,
+      medium: {
+        type: Number,
+      },
+      large: {
+        type: Number,
+      },
+      extraLarge: {
+        type: Number,
+      },
     },
-    emailverified: {
-      type: Boolean,
-      required: true,
-    },
-    mobileverification: {
-      type: Boolean,
-      required: true,
+    images: {
+      type: Array,
     },
     isActive: {
       type: Boolean,
@@ -62,4 +67,4 @@ const merchantSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Merchant", merchantSchema);
+module.exports = mongoose.model("Product", productSchema);
