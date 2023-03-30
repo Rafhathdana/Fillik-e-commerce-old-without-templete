@@ -275,7 +275,42 @@
     }
   });
 
-  function verifyOTP(otp) {}
+  function verifyOTP(otp) {
+    fetch("/verifyotp", {
+      method: "POST",
+      body: JSON.stringify({
+        OTP: otp,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json(); // get the response body
+      })
+      .then((data) => {
+        console.log(data);
+
+        if (data.success) {
+          console.log(data);
+
+          signinUser();
+          // OTP verification successful, submit the form
+          // document.querySelector('form').submit();
+        } else {
+          console.log(data);
+          showOTPSection();
+          // OTP verification failed, display an error message
+          var error = "OTP entered wrong. Please try again.";
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(
+          "An error occurred while sending verifying OTP. Please try again later."
+        );
+      });
+  }
   function signinUser() {
     const email = document.getElementById("email").value;
     const fullName = document.getElementById("fullName").value;

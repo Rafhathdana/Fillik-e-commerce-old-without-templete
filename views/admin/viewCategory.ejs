@@ -1,0 +1,88 @@
+<%- include('headerlist') -%>
+<body class="rafcolour">
+  <div class="categoryHeading">Category</div>
+  <% for (let i = 0; i < category.length; i++) { %>
+  <div class="category-div">
+    <div class="categoryvalue"><%= category[i].values %></div>
+    <a href="/admin/editCatagory/<%=category[i]._id %>" class="categoryvalue">
+      <button class="edit-btn">Edit</button>
+    </a>
+
+    <div class="categoryvalue">
+      <button
+        class="btn btn-danger btn-sm"
+        onclick="confirmDelete('<%= category[i]._id %>')"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+  <% } %>
+  <div class="categoryHeading">colour</div>
+  <% for (let i = 0; i < colour.length; i++) { %>
+
+  <div class="category-div">
+    <div class="categoryvalue"><%= colour[i].values %></div>
+    <a href="/admin/editCatagory/<%=colour[i]._id %>" class="categoryvalue">
+      <button class="edit-btn">Edit</button>
+    </a>
+
+    <div class="categoryvalue">
+      <button
+        class="btn btn-danger btn-sm"
+        onclick="confirmDelete('<%= colour[i]._id %>')"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+  <% } %>
+
+  <div class="categoryHeading">Pattern</div>
+  <% for (let i = 0; i < pattern.length; i++) { %>
+
+  <div class="category-div">
+    <div class="categoryvalue"><%=pattern[i].values%></div>
+    <a href="/admin/editCatagory/<%=pattern[i]._id %>" class="categoryvalue">
+      <button class="edit-btn">Edit</button>
+    </a>
+
+    <div class="categoryvalue">
+      <button
+        class="btn btn-danger btn-sm"
+        onclick="confirmDelete('<%= pattern[i]._id %>')"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+  <% } %>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+</body>
+
+<script>
+  function confirmDelete(Id) {
+    if (confirm("Are you sure you want to delete this user?")) {
+      // User confirmed, redirect to the delete user URL with the user's _id
+      fetch(`/admin/deleteCategory/${Id}`, { method: "DELETE" })
+        .then((res) => {
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            alert("unable to delete Category");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Internal server error");
+        });
+    } else {
+      // User cancelled, do nothing
+      console.log("cancelled deletion ");
+    }
+  }
+</script>

@@ -5,37 +5,36 @@
     <!-- CATEGORY -->
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <div class="category">
-        <h1 class="categoryname">Category</h1>
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="category-dropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Select a category
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="category-dropdown">
-            <li><a class="dropdown-item" name="Top">Top</a></li>
-          </ul>
-        </div>
+        <h1 class="categoryname">Add Category</h1>
+        <select name="categorytype" id="categorytype" class="selectcategory">
+          <% for (let i = 0; i < category.length; i++) { %>
+          <option value="<%= category[i].values %>">
+            <%= category[i].values %>
+          </option>
+          <% } %>
+        </select>
       </div>
+
       <div class="category">
-        <h1 class="categoryname">Color:</h1>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Red, white, black, pink..."
-        />
+        <h1 class="categoryname">Colour</h1>
+        <select name="categorytype" id="categorytype" class="selectcategory">
+          <% for (let i = 0; i < colour.length; i++) { %>
+          <option value="<%= colour[i].values %>">
+            <%= colour[i].values %>
+          </option>
+          <% } %>
+        </select>
       </div>
+
       <div class="category">
-        <h1 class="categoryname">Pattern:</h1>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Floral, striped, polka dot..."
-        />
+        <h1 class="categoryname">Pattern</h1>
+        <select name="categorytype" id="categorytype" class="selectcategory">
+          <% for (let i = 0; i < pattern.length; i++) { %>
+          <option value="<%= pattern[i].values %>">
+            <%= pattern[i].values %>
+          </option>
+          <% } %>
+        </select>
       </div>
       <div class="category">
         <h1 class="categoryname">Actual Price:</h1>
@@ -48,7 +47,7 @@
 
       <!-- GENDER -->
       <div class="gender">
-        <h1 class="categoryname">Gender</h1>
+        <h1 class="categoryname">Gender Type</h1>
       </div>
       <div class="gender">
         <div class="form-check form-check-inline">
@@ -76,10 +75,10 @@
             class="form-check-input"
             type="radio"
             name="gender"
-            id="other"
-            value="other"
+            id="Both"
+            value="Both"
           />
-          <label class="form-check-label" for="other">Other</label>
+          <label class="form-check-label" for="other">Both</label>
         </div>
       </div>
       <!-- SIZES AND QUANTITY -->
@@ -153,34 +152,108 @@
 
       <!-- Custom JavaScript -->
       <script>
+        // function previewImages(event) {
+        //   const previewContainer = document.getElementById("preview-container");
+        //   previewContainer.innerHTML = ""; // Clear previous previews
+        //   const files = event.target.files;
+        //   for (let i = 0; i < files.length; i++) {
+        //     const file = files[i];
+        //     const reader = new FileReader();
+        //     reader.onload = function () {
+        //       const imagePreviewTemplate = document.getElementById(
+        //         "image-preview-template"
+        //       );
+        //       const imagePreview = imagePreviewTemplate.content.cloneNode(true);
+        //       imagePreview.querySelector("img").src = reader.result;
+        //       previewContainer.appendChild(imagePreview);
+        //     };
+        //     reader.readAsDataURL(file);
+        //   }
+        // }
+
+        // function removeImage(event) {
+        //   const raf = event.target.closest(".raf");
+        //   raf.remove();
+        //   const previewContainer = document.getElementById("preview-container");
+        //   const files = document.getElementById("images").files;
+        //   if (previewContainer.children.length < files.length) {
+        //     document.getElementById("images").value = ""; // Clear selected files if images were removed
+        //   }
+        // }
+        // Keep track of selected images
+        let selectedImages = [];
+
         function previewImages(event) {
           const previewContainer = document.getElementById("preview-container");
           previewContainer.innerHTML = ""; // Clear previous previews
+          selectedImages = []; // Reset selected images array
           const files = event.target.files;
           for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            const reader = new FileReader();
-            reader.onload = function () {
-              const imagePreviewTemplate = document.getElementById(
-                "image-preview-template"
-              );
-              const imagePreview = imagePreviewTemplate.content.cloneNode(true);
-              imagePreview.querySelector("img").src = reader.result;
-              previewContainer.appendChild(imagePreview);
-            };
-            reader.readAsDataURL(file);
+            // Add file to selected images array
+            selectedImages.push(file);
+            // Create image preview element
+            const imagePreviewTemplate = document.getElementById(
+              "image-preview-template"
+            );
+            const imagePreview = imagePreviewTemplate.content.cloneNode(true);
+            const img = imagePreview.querySelector(".raf-img-top");
+            img.src = URL.createObjectURL(file);
+            // Add image preview to container
+            previewContainer.appendChild(imagePreview);
           }
         }
 
         function removeImage(event) {
-          const raf = event.target.closest(".raf");
-          raf.remove();
           const previewContainer = document.getElementById("preview-container");
-          const files = document.getElementById("images").files;
-          if (previewContainer.children.length < files.length) {
-            document.getElementById("images").value = ""; // Clear selected files if images were removed
+          const imagePreview = event.target.closest(".col-md-2");
+          const img = imagePreview.querySelector(".raf-img-top");
+          // Remove image from selected images array
+          const index = selectedImages.findIndex(
+            (file) => file.name === img.alt
+          );
+          if (index >= 0) {
+            selectedImages.splice(index, 1);
           }
+          // Remove image preview from container
+          previewContainer.removeChild(imagePreview);
         }
+
+        function submitForm(event) {
+          // Prevent default form submission
+          event.preventDefault();
+          // Upload selected images
+          const formData = new FormData();
+          for (let i = 0; i < selectedImages.length; i++) {
+            const file = selectedImages[i];
+            formData.append("images", file);
+          }
+          // Add other form data to FormData object
+          const form = document.querySelector("form");
+          const inputs = form.querySelectorAll("input, select, textarea");
+          for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+            formData.append(input.name, input.value);
+          }
+          // Submit form data
+          fetch("/upload", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              alert("Form submitted successfully!");
+            })
+            .catch((error) => {
+              console.error(error);
+              alert("Form submission failed!");
+            });
+        }
+
+        // Add event listeners
+        const form = document.querySelector("form");
+        form.addEventListener("submit", submitForm);
       </script>
     </form>
   </div>

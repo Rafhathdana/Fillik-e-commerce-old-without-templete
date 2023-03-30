@@ -393,6 +393,30 @@ a {
   text-align: center;
   justify-content: center;
   color: #005159;
+  cursor: pointer;
+}
+.sizeBox:active {
+  color: #ffffff;
+  background: #005159;
+}
+.sizelessBox {
+  width: 50px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 21px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 34px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: not-allowed;
 }
 
 .quantity {

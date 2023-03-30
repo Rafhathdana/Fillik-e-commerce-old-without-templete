@@ -22,7 +22,7 @@ module.exports = {
       req.end(function (res) {
         if (res.error) {
           console.log("error");
-          reject(res.error);
+          reject(res.error);  
         } else {
           console.log("sussecc");
           resolve(res.body);

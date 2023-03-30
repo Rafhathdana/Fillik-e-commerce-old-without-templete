@@ -26,11 +26,17 @@ router.get(
   adminController.verify,
   adminController.getAddCategory
 );
+router.get(
+  "/viewcategory",
+  adminController.verify,
+  adminController.getViewCategory
+);
 router.post(
   "/addcategory",
   adminController.verify,
   adminController.postAddCategory
 );
+
 router.post("/login", adminController.adminauth, adminController.postSignin);
 router.get("/signup", adminController.adminauth, adminController.getSignUp);
 router.post("/signup", adminController.adminauth, adminController.postSignup);
@@ -40,7 +46,11 @@ router.post(
   adminController.verify,
   adminController.statusUserUpdate
 );
-
+router.delete(
+  "/deleteCategory/:Id",
+  adminController.verify,
+  adminController.deleteCategory
+);
 router.post(
   "/statusMerchantUpdate/:userId",
   adminController.verify,

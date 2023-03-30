@@ -1,4 +1,5 @@
 var Merchant = require("../models/merchantSchema");
+var filterproduct = require("../models/filterSchema");
 const bcrypt = require("bcrypt");
 const { response } = require("../app");
 module.exports = {
@@ -38,6 +39,20 @@ module.exports = {
       title: "product",
       brandName: req.session.merchant.brandName,
       loggedin: req.session.merchantLoggedIn,
+    });
+  },
+  getAddProduct: async (req, res, next) => {
+    let category = await filterproduct.find({ categoryname: "Category" });
+    let colour = await filterproduct.find({ categoryname: "Colour" });
+    let pattern = await filterproduct.find({ categoryname: "Pattern" });
+
+    res.render("merchant/addproduct", {
+      title: "product",
+      brandName: req.session.merchant.brandName,
+      loggedin: req.session.merchantloggedIn,
+      category,
+      colour,
+      pattern,
     });
   },
   postSignup: async (req, res) => {

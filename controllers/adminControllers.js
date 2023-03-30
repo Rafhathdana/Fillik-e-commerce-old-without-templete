@@ -76,6 +76,31 @@ module.exports = {
     });
     req.session.categoryout = null;
   },
+  category: async (type) => {
+    let category = await filterproduct.find({ categoryname: "Category" });
+    return category;
+  },
+  colour: async (type) => {
+    const colour = await filterproduct.find({ categoryname: "Colour" });
+    return colour;
+  },
+  pattern: async (type) => {
+    const pattern = await filterproduct.find({ categoryname: "Pattern" });
+    return pattern;
+  },
+  getViewCategory: async (req, res, next) => {
+    const category = this.category;
+    const colour = this.colour;
+    const pattern = this.pattern;
+    res.render("admin/viewCategory", {
+      title: "addCategory",
+      fullName: req.session.admin.fullName,
+      loggedin: req.session.adminLoggedIn,
+      category,
+      colour,
+      pattern,
+    });
+  },
 
   postAddCategory: async (req, res, next) => {
     try {
@@ -122,7 +147,7 @@ module.exports = {
         });
       } else {
         req.session.errmsg = "Invalid Username or Password";
-        res.status(400).redirect("/login");
+        res.status(400).redirect("/admin/login");
       }
     } catch (error) {
       console.log(error);
@@ -176,6 +201,21 @@ module.exports = {
     } catch (err) {
       console.error(err);
     }
+  },
+  deleteCategory: async (req, res, next) => {
+    filterproduct
+      .deleteOne({ _id: req.params.Id })
+      .then((response) => {
+        if (response) {
+          console.log("hai");
+          res.sendStatus(204);
+        } else {
+          res.status(400).json({ message: "unable to delete Category" });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Internal server error" });
+      });
   },
   statusMerchantUpdate: async (req, res, next) => {
     try {

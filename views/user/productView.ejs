@@ -70,8 +70,12 @@
     sizeBox.addEventListener("click", () => {
       sizeBoxes.forEach((box) => {
         box.classList.remove("active");
+        box.style.background = "#ffffff";
+        box.style.color = "#005159";
       });
       sizeBox.classList.add("active");
+      sizeBox.style.background = "#005159";
+      sizeBox.style.color = "#FFFFFF";
     });
   });
 

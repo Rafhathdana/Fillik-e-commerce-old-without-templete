@@ -21,7 +21,7 @@ router.get(
 router.get("/home", merchantController.verify, merchantController.getHome);
 router.post(
   "/signup",
-  merchantController.merchantauth,
+  merchantController.merchantauth, 
   merchantController.postSignup
 );
 router.post(
@@ -33,13 +33,11 @@ router.post(
 router.get("/products", (req, res, next) => {
   res.render("merchant/productlist", { title: "Express" });
 });
-router.get("/addproduct", (req, res, next) => {
-  res.render("merchant/addproduct", {
-    title: "product",
-    brandName: req.session.merchant.brandName,
-    loggedin: req.session.merchantloggedIn,
-  });
-});
+router.get(
+  "/addproduct",
+  merchantController.verify,
+  merchantController.getAddProduct
+);
 router.post("/addproduct", (req, res, next) => {});
 
 router.get("/logout", merchantController.logout);

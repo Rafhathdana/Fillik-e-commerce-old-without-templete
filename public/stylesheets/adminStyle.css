@@ -335,3 +335,65 @@ td {
 .submitbutton:active {
   transform: translateY(2px);
 }
+
+/* category view */
+
+.categoryHeading {
+  width: 258px;
+  height: 36px;
+  margin-top: 100px;
+  margin-left: 130px;
+  margin-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+}
+.category-div {
+  display: flex;
+  border: 1px solid #022d17;
+  height: 50px;
+  width: 70%;
+  justify-content: center;
+  margin: 0px auto;
+}
+.categoryvalue {
+  width: 33.3%;
+  text-align: center;
+  align-self: center;
+}
+.edit-btn {
+  width: 80px;
+  height: 30px;
+  color: #ffffff;
+  background: #00575f;
+  border: 1px solid #ffffff;
+  text-align: center;
+  align-self: center;
+  border-radius: 9px;
+}
+.edit-btn:hover {
+  color: #251e1e;
+  background: #9ac5c9;
+  border: 1px solid #0f0b0b;
+}
+.btn-sm {
+  width: 80px;
+  height: 30px;
+  color: #ffffff;
+  background: #aa0800;
+  border: 1px solid #ffffff;
+  text-align: center;
+  align-self: center;
+  border-radius: 9px;
+}
+.btn-sm:hover {
+  color: #ffffff;
+  background: #000000;
+  border: 1px solid #ffffff;
+}
