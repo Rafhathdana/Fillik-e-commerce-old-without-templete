@@ -3,106 +3,101 @@
   <div class="mainheading">Add Products</div>
   <div class="main-div">
     <!-- CATEGORY -->
-    <form action="/upload" method="POST" enctype="multipart/form-data">
+    <form
+      action="/merchant/addproduct"
+      method="POST"
+      enctype="multipart/form-data"
+    >
       <div class="category">
-        <h1 class="categoryname">Add Category</h1>
-        <select name="categorytype" id="categorytype" class="selectcategory">
-          <% for (let i = 0; i < category.length; i++) { %>
-          <option value="<%= category[i].values %>">
-            <%= category[i].values %>
-          </option>
-          <% } %>
-        </select>
-      </div>
-
-      <div class="category">
-        <h1 class="categoryname">Colour</h1>
-        <select name="categorytype" id="categorytype" class="selectcategory">
-          <% for (let i = 0; i < colour.length; i++) { %>
-          <option value="<%= colour[i].values %>">
-            <%= colour[i].values %>
-          </option>
-          <% } %>
-        </select>
-      </div>
-
-      <div class="category">
-        <h1 class="categoryname">Pattern</h1>
-        <select name="categorytype" id="categorytype" class="selectcategory">
-          <% for (let i = 0; i < pattern.length; i++) { %>
-          <option value="<%= pattern[i].values %>">
-            <%= pattern[i].values %>
-          </option>
-          <% } %>
-        </select>
-      </div>
-      <div class="category">
-        <h1 class="categoryname">Actual Price:</h1>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter the actual price..."
-        />
-      </div>
-
-      <!-- GENDER -->
-      <div class="gender">
-        <h1 class="categoryname">Gender Type</h1>
-      </div>
-      <div class="gender">
-        <div class="form-check form-check-inline">
+        <div class="category">
+          <h1 class="categoryname">Name of the Product</h1>
           <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            id="male"
-            value="male"
+            type="text"
+            class="form-control"
+            name="name"
+            placeholder="Enter the Name of..."
           />
-          <label class="form-check-label" for="male">Male</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="category">
+          <h1 class="categoryname">Short Description</h1>
           <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            id="female"
-            value="female"
+            type="text"
+            class="form-control"
+            name="description"
+            placeholder="Enter the Description..."
           />
-          <label class="form-check-label" for="female">Female</label>
         </div>
-        <div class="form-check form-check-inline">
+        <div class="category">
+          <h1 class="categoryname">Gender Type</h1>
+          <select name="genderType" id="genderType" class="selectcategory">
+            <% for (let i = 0; i < genderType.length; i++) { %>
+            <option class="selectoption" value="<%= genderType[i].values %>">
+              <%= genderType[i].values %>
+            </option>
+            <% } %>
+          </select>
+        </div>
+        <div class="category">
+          <h1 class="categoryname">Add Category</h1>
+          <select name="category" id="category" class="selectcategory">
+            <% for (let i = 0; i < category.length; i++) { %>
+            <option class="selectoption" value="<%= category[i].values %>">
+              <%= category[i].values %>
+            </option>
+            <% } %>
+          </select>
+        </div>
+        <div class="category">
+          <h1 class="categoryname">Colour</h1>
+          <select name="colour" id="colour" class="selectcategory">
+            <% for (let i = 0; i < colour.length; i++) { %>
+            <option class="selectoption" value="<%= colour[i].values %>">
+              <%= colour[i].values %>
+            </option>
+            <% } %>
+          </select>
+        </div>
+        <div class="category">
+          <h1 class="categoryname">Pattern</h1>
+          <select name="pattern" id="pattern" class="selectcategory">
+            <% for (let i = 0; i < pattern.length; i++) { %>
+            <option class="selectoption" value="<%= pattern[i].values %>">
+              <%= pattern[i].values %>
+            </option>
+            <% } %>
+          </select>
+        </div>
+        <div class="category">
+          <h1 class="categoryname">Actual Price:</h1>
           <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            id="Both"
-            value="Both"
+            type="text"
+            class="form-control"
+            name="actualPrice"
+            placeholder="Enter the actual price..."
           />
-          <label class="form-check-label" for="other">Both</label>
         </div>
       </div>
-      <!-- SIZES AND QUANTITY -->
       <div class="sizes-and-quantity flex-colum">
         <h1 class="categoryname">Sizes and Quantity</h1>
         <div class="size">
           <h2>S</h2>
           <span class="spanning">:</span>
-          <input type="number" class="form-controling" />
+          <input type="number" name="small" class="form-controling" />
         </div>
         <div class="size">
           <h2>M</h2>
           <span class="spanning">:</span>
-          <input type="number" class="form-controling" />
+          <input type="number" name="medium" class="form-controling" />
         </div>
         <div class="size">
           <h2>L</h2>
           <span class="spanning">:</span>
-          <input type="number" class="form-controling" />
+          <input type="number" name="large" class="form-controling" />
         </div>
         <div class="size">
           <h2>XL</h2>
           <span class="spanning">:</span>
-          <input type="number" class="form-controling" />
+          <input type="number" name="extralarge" class="form-controling" />
         </div>
       </div>
       <!-- HTML code using EJS syntax -->
@@ -152,211 +147,37 @@
 
       <!-- Custom JavaScript -->
       <script>
-        // function previewImages(event) {
-        //   const previewContainer = document.getElementById("preview-container");
-        //   previewContainer.innerHTML = ""; // Clear previous previews
-        //   const files = event.target.files;
-        //   for (let i = 0; i < files.length; i++) {
-        //     const file = files[i];
-        //     const reader = new FileReader();
-        //     reader.onload = function () {
-        //       const imagePreviewTemplate = document.getElementById(
-        //         "image-preview-template"
-        //       );
-        //       const imagePreview = imagePreviewTemplate.content.cloneNode(true);
-        //       imagePreview.querySelector("img").src = reader.result;
-        //       previewContainer.appendChild(imagePreview);
-        //     };
-        //     reader.readAsDataURL(file);
-        //   }
-        // }
-
-        // function removeImage(event) {
-        //   const raf = event.target.closest(".raf");
-        //   raf.remove();
-        //   const previewContainer = document.getElementById("preview-container");
-        //   const files = document.getElementById("images").files;
-        //   if (previewContainer.children.length < files.length) {
-        //     document.getElementById("images").value = ""; // Clear selected files if images were removed
-        //   }
-        // }
-        // Keep track of selected images
-        let selectedImages = [];
-
         function previewImages(event) {
           const previewContainer = document.getElementById("preview-container");
           previewContainer.innerHTML = ""; // Clear previous previews
-          selectedImages = []; // Reset selected images array
           const files = event.target.files;
           for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            // Add file to selected images array
-            selectedImages.push(file);
-            // Create image preview element
-            const imagePreviewTemplate = document.getElementById(
-              "image-preview-template"
-            );
-            const imagePreview = imagePreviewTemplate.content.cloneNode(true);
-            const img = imagePreview.querySelector(".raf-img-top");
-            img.src = URL.createObjectURL(file);
-            // Add image preview to container
-            previewContainer.appendChild(imagePreview);
+            const reader = new FileReader();
+            reader.onload = function () {
+              const imagePreviewTemplate = document.getElementById(
+                "image-preview-template"
+              );
+              const imagePreview = imagePreviewTemplate.content.cloneNode(true);
+              imagePreview.querySelector("img").src = reader.result;
+              previewContainer.appendChild(imagePreview);
+            };
+            reader.readAsDataURL(file);
           }
         }
 
         function removeImage(event) {
+          const raf = event.target.closest(".raf");
+          raf.remove();
           const previewContainer = document.getElementById("preview-container");
-          const imagePreview = event.target.closest(".col-md-2");
-          const img = imagePreview.querySelector(".raf-img-top");
-          // Remove image from selected images array
-          const index = selectedImages.findIndex(
-            (file) => file.name === img.alt
-          );
-          if (index >= 0) {
-            selectedImages.splice(index, 1);
+          const files = document.getElementById("images").files;
+          if (previewContainer.children.length < files.length) {
+            document.getElementById("images").value = ""; // Clear selected files if images were removed
           }
-          // Remove image preview from container
-          previewContainer.removeChild(imagePreview);
         }
-
-        function submitForm(event) {
-          // Prevent default form submission
-          event.preventDefault();
-          // Upload selected images
-          const formData = new FormData();
-          for (let i = 0; i < selectedImages.length; i++) {
-            const file = selectedImages[i];
-            formData.append("images", file);
-          }
-          // Add other form data to FormData object
-          const form = document.querySelector("form");
-          const inputs = form.querySelectorAll("input, select, textarea");
-          for (let i = 0; i < inputs.length; i++) {
-            const input = inputs[i];
-            formData.append(input.name, input.value);
-          }
-          // Submit form data
-          fetch("/upload", {
-            method: "POST",
-            body: formData,
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              alert("Form submitted successfully!");
-            })
-            .catch((error) => {
-              console.error(error);
-              alert("Form submission failed!");
-            });
-        }
-
-        // Add event listeners
-        const form = document.querySelector("form");
-        form.addEventListener("submit", submitForm);
       </script>
     </form>
   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script>
-  $(document).ready(function () {
-    $.validator.addMethod(
-      "noSpecialChars",
-      function (value, element) {
-        return this.optional(element) || /^(?!\s)[a-zA-Z ]+$/.test(value);
-      },
-      "Special characters and spaces are not allowed"
-    );
-    $.validator.addMethod(
-      "email",
-      function (value, element) {
-        return (
-          this.optional(element) ||
-          /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(value)
-        );
-      },
-      "Please enter a valid email address"
-    );
-    $.validator.addMethod(
-      "number",
-      function (value, element) {
-        return this.optional(element) || /^(?!0)[0-9]+$/.test(value);
-      },
-      "numbers only allowed"
-    );
-    $("#signup-form").validate({
-      rules: {
-        email: {
-          required: true,
-          email: true,
-        },
-        fullName: {
-          required: true,
-          minlength: 3,
-          noSpecialChars: true,
-        },
-        mobile: {
-          required: true,
-          maxlength: 10,
-          minlength: 10,
-          number: true,
-        },
-        password: {
-          required: true,
-          minlength: 8,
-        },
-        confirmPassword: {
-          required: true,
-          equalTo: "#password",
-        },
-      },
-      messages: {
-        email: {
-          required: "Please enter your email address",
-          email: "Please enter a valid email address",
-        },
-        fullName: {
-          required: "Please enter your full name",
-          minlength: "Your name must be at least 3 characters long",
-          noSpecialChars: "Special characters and spaces are not allowed",
-        },
-        mobile: {
-          required: "Please enter Mobile Number",
-          minlength: "10 digit indian number should be there",
-          maxlength: "maximum 10 digit allowed in indian number",
-          number: "only numbers allowed",
-        },
-        password: {
-          required: "Please enter a password",
-          minlength: "Your password must be at least 8 characters long",
-        },
-        confirmPassword: {
-          required: "Please confirm your password",
-          equalTo: "Your passwords do not match",
-        },
-      },
-      highlight: function (element) {
-        $(element).closest(".form-floating").addClass("is-invalid");
-      },
-      unhighlight: function (element) {
-        $(element).closest(".form-floating").removeClass("is-invalid");
-      },
-      errorElement: "div",
-      errorClass: "invalid-feedback",
-      errorPlacement: function (error, element) {
-        if (element.parent(".input-group").length) {
-          error.insertAfter(element.parent());
-        } else {
-          error.insertAfter(element);
-        }
-      },
-    });
-    $(".pin-box").keyup(function () {
-      if ($(this).val().length === $(this).attr("maxlength")) {
-        $(this).next().focus();
-      }
-    });
-  });
-</script>

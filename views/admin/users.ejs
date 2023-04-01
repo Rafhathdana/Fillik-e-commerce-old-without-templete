@@ -1,21 +1,57 @@
-<%- include('headerlist') -%>
-<div class="heading">Users Details</div>
+<%- include('header') -%>
+
+<div class="row">
+  <div class="col heading">Users Details</div>
+  <div class="col">
+    <div class="float-right">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          count
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="?count=10&page=1">10</a></li>
+          <li><a class="dropdown-item" href="?count=25&page=1">25</a></li>
+          <li><a class="dropdown-item" href="?count=50&page=1">50</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
-        <th>Email</th>
-        <th>Full Name</th>
-        <th>No. of Orders</th>
-        <th>Complaints</th>
-        <th>Actions</th>
+        <th>Email <a class="ass">^</a><a class="des">^</a></th>
+        <th>
+          Full Name <a href="?ascending" class="ass">^</a
+          ><a href="?ascending" class="des">^</a>
+        </th>
+        <th>
+          No. of Orders <a href="?ascending" class="ass">^</a
+          ><a href="?ascending" class="des">^</a>
+        </th>
+        <th>
+          Complaints<a href="?ascending" class="ass">^</a
+          ><a href="?ascending" class="des">^</a>
+        </th>
+        <th>
+          Actions<a href="?ascending" class="ass">^</a
+          ><a href="?ascending" class="des">^</a>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <% for (let i = 0; i < userslist.length; i++) { %>
+      <% for (let i = locals.startIndex; i < locals.endIndex; i++) { %>
       <tr>
-        <td><%= userslist[i].email %></td>
-        <td><%= userslist[i].fullName %></td>
+        <td><%= usersList[i].email %></td>
+        <td><%= usersList[i].fullName %></td>
         <td>0</td>
         <td>
           <div class="complaint-box">
@@ -24,22 +60,21 @@
         </td>
         <td>
           <div class="d-flex">
-            <% if(userslist[i].isActive){%>
+            <% if(usersList[i].isActive){%>
             <div
               class="action-box mx-3"
-              onclick="confirmStatus('<%= userslist[i]._id %>')"
+              onclick="confirmStatus('<%= usersList[i]._id %>')"
             >
               <span class="action-text">Block </span>
             </div>
             <% } else { %>
             <div
               class="action-box red mx-3"
-              onclick="confirmStatus('<%= userslist[i]._id %>')"
+              onclick="confirmStatus('<%= usersList[i]._id %>')"
             >
               <span class="action-text">Unblock </span>
             </div>
             <% } %>
-
             <div class="action-box">
               <a href="#" class="details-link">Details</a>
             </div>
@@ -50,6 +85,27 @@
     </tbody>
   </table>
 </div>
+<div class="pagenumbers">
+  <% for (let i = 1; i <= locals.totalPages; i++) { %>
+  <a
+    href="?count=<%= count %>&page=<%= i %>"
+    class="page<%= i === parseInt(page) ? ' active' : '' %>"
+    ><%= i %></a
+  >
+  <% } %>
+</div>
+<div class="nextprev">
+  <% if (locals.page > 1) { %>
+  <a href="?count=<%= count %>&page=<%= parseInt(page) - 1 %>" class="prev"
+    >Prev</a
+  >
+  <% } %> <% if (locals.page < locals.totalPages) { %>
+  <a href="?count=<%= count %>&page=<%= parseInt(page) + 1 %>" class="next"
+    >Next</a
+  >
+  <% } %>
+</div>
+
 <script>
   function confirmStatus(userId) {
     if (confirm("Are you sure you want to Block this user?")) {
@@ -71,3 +127,5 @@
     }
   }
 </script>
+
+<!-- Include the Bootstrap CSS -->

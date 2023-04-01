@@ -29,25 +29,49 @@ module.exports = {
     res.render("admin/users", {
       title: "users",
       fullName: req.session.admin.fullName,
-      loggedin: req.session.adminLoggedIn,
+      adminLoggedin: req.session.adminLoggedIn,
       userslist,
     });
   },
   getUser: async (req, res, next) => {
-    const userslist = await users.find().limit(10);
-    res.render("admin/users", {
-      title: "admin",
-      fullName: req.session.admin.fullName,
-      loggedin: req.session.adminLoggedIn,
-      userslist,
-    });
+    try {
+      const count = parseInt(req.query.count) || 10;
+      const page = parseInt(req.query.page) || 1;
+      const usersList = await users
+        .find()
+        .skip((page - 1) * count)
+        .limit(count)
+        .lean();
+
+      const totalPages = Math.ceil((await users.countDocuments()) / count);
+      const startIndex = (page - 1) * count;
+
+      const endIndex = Math.min(
+        startIndex + count,
+        await users.countDocuments()
+      );
+
+      res.render("admin/users", {
+        title: "Users List",
+        fullName: req.session.admin.fullName,
+        adminLoggedin: req.session.adminLoggedIn,
+        usersList,
+        count,
+        page,
+        totalPages,
+        startIndex,
+        endIndex,
+      });
+    } catch (error) {
+      next(error);
+    }
   },
   getMerchant: async (req, res, next) => {
     const merchantslist = await merchants.find().limit(10);
     res.render("admin/merchants", {
       title: "admin",
       fullName: req.session.admin.fullName,
-      loggedin: req.session.adminLoggedIn,
+      adminLoggedin: req.session.adminLoggedIn,
       merchantslist,
     });
   },
@@ -55,7 +79,7 @@ module.exports = {
     res.render("admin/login", {
       title: "admin",
       err_msg: req.session.adminerrmsg,
-      loggedin: false,
+      adminLoggedin: false,
     });
     req.session.errmsg = null;
   },
@@ -63,7 +87,7 @@ module.exports = {
     res.render("admin/signup", {
       title: "admin",
       err_msg: req.session.adminerrmsg,
-      loggedin: false,
+      adminLoggedin: false,
     });
     req.session.errmsg = null;
   },
@@ -71,34 +95,25 @@ module.exports = {
     res.render("admin/addCategory", {
       title: "addCategory",
       fullName: req.session.admin.fullName,
-      loggedin: req.session.adminLoggedIn,
+      adminLoggedin: req.session.adminLoggedIn,
       categoryout: req.session.categoryout,
     });
     req.session.categoryout = null;
   },
-  category: async (type) => {
-    let category = await filterproduct.find({ categoryname: "Category" });
-    return category;
-  },
-  colour: async (type) => {
-    const colour = await filterproduct.find({ categoryname: "Colour" });
-    return colour;
-  },
-  pattern: async (type) => {
-    const pattern = await filterproduct.find({ categoryname: "Pattern" });
-    return pattern;
-  },
   getViewCategory: async (req, res, next) => {
-    const category = this.category;
-    const colour = this.colour;
-    const pattern = this.pattern;
+    const category = await filterproduct.find({ categoryname: "Category" });
+    const colour = await filterproduct.find({ categoryname: "Colour" });
+    const pattern = await filterproduct.find({ categoryname: "Pattern" });
+    const genderType = await filterproduct.find({ categoryname: "GenderType" });
+
     res.render("admin/viewCategory", {
       title: "addCategory",
       fullName: req.session.admin.fullName,
-      loggedin: req.session.adminLoggedIn,
+      adminLoggedin: req.session.adminLoggedIn,
       category,
       colour,
       pattern,
+      genderType,
     });
   },
 

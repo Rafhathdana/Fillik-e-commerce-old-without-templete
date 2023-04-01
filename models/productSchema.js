@@ -19,7 +19,7 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    color: {
+    colour: {
       type: String,
       required: true,
     },
@@ -35,7 +35,7 @@ const productSchema = new Schema(
       type: Number,
       required: true,
     },
-    gender: {
+    genderType: {
       type: String,
       required: true,
     },

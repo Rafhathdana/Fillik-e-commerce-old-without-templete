@@ -1,4 +1,4 @@
-<%- include('headerlist') -%>
+<%- include('header') -%>
 <body class="rafcolour">
   <div class="categoryHeading">Category</div>
   <% for (let i = 0; i < category.length; i++) { %>
@@ -51,6 +51,26 @@
       <button
         class="btn btn-danger btn-sm"
         onclick="confirmDelete('<%= pattern[i]._id %>')"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+  <% } %>
+
+  <div class="categoryHeading">Gender Type</div>
+  <% for (let i = 0; i < genderType.length; i++) { %>
+
+  <div class="category-div">
+    <div class="categoryvalue"><%=genderType[i].values%></div>
+    <a href="/admin/editCatagory/<%=genderType[i]._id %>" class="categoryvalue">
+      <button class="edit-btn">Edit</button>
+    </a>
+
+    <div class="categoryvalue">
+      <button
+        class="btn btn-danger btn-sm"
+        onclick="confirmDelete('<%= genderType[i]._id %>')"
       >
         Delete
       </button>

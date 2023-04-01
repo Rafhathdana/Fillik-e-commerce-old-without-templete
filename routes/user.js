@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 const userController = require("../controllers/userControllers");
 const otp = require("../controllers/otp");
-const multer = require("multer");
 
 /* GET home page. */
 function userauth(req, res, next) {
@@ -78,27 +77,6 @@ router.get("/logout", function (req, res) {
     }
   });
 });
+router.get("/logout", userController.logout);
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
-
-router.post("/upload", upload.array("images"), function (req, res) {
-  console.log(req.files);
-  res.send("Images uploaded!");
-});
-router.get("/upload", upload.array("images"), function (req, res) {
-  res.render("merchant/images", {
-    title: "user",
-    err_msg: req.session.errmsg,
-    loggedin: false,
-  });
-});
 module.exports = router;

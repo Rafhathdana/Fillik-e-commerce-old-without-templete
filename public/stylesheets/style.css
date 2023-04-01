@@ -28,7 +28,7 @@ a {
 .icon-head {
   width: 163px;
   height: 40px;
-  margin-left: 116px;
+  margin-left: 80px;
 }
 
 .navbar-custom {
@@ -55,7 +55,6 @@ a {
 }
 
 .navbar-custom .form-control {
-  width: 300px;
   margin-right: 10px;
 }
 

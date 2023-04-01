@@ -8,42 +8,47 @@
     <div class="productinfo">
       <div class="flex">
         <div class="product-id">Product ID:</div>
-        <div class="product-id-value">234354232523</div>
+        <div class="product-id-value"><%= product.category %></div>
       </div>
       <div class="flex">
         <div class="product-id">Status:</div>
+        <%if(product.isActive){%>
+
         <div class="status-value">Active</div>
+        <% } else{ %>
+        <div class="status-value">InActive</div>
+        <% } %>
       </div>
-    </div>
+    </div> 
     <div class="text-block">
       <div class="plain-pattern">
-        Color: <span class="pink-color">Pink </span>
+        Color: <span class="pink-color"><%= product.colour %> </span>
       </div>
       <div class="plain-pattern">
-        Pattern: <span class="pink-color">Plain</span>
+        Pattern: <span class="pink-color"><%= product.pattern %></span>
       </div>
       <div class="plain-pattern">
-        Gender: <span class="pink-color">Women</span>
+        Gender Type: <span class="pink-color"><%= product.genderType %></span>
       </div>
       <div class="plain-pattern">
-        Category: <span class="pink-color">Top</span>
+        Category: <span class="pink-color"><%= product.category %></span>
       </div>
     </div>
     <div class="sizes-box">
       <div class="heading">Quantity</div>
       <div class="sizes">
-        <div class="size">Small: 17</div>
-        <div class="size">Medium: 13</div>
-        <div class="size">large: 25</div>
-        <div class="size">X-Large: 4</div>
+        <div class="size">Small: <%= product.category %></div>
+        <div class="size">Medium: <%= product.category %></div>
+        <div class="size">large: <%= product.category %></div>
+        <div class="size">X-Large: <%= product.category %></div>
       </div>
     </div>
 
     <div class="prices mx-auto">
       <div class="product-price">Product Price:</div>
-      <div class="product-price-value">RS.500.00</div>
+      <div class="product-price-value">RS.<%= product.category %>.00</div>
       <div class="product-price">Actual Price:</div>
-      <div class="product-price-value">RS.70.00</div>
+      <div class="product-price-value">RS.<%= product.category %>70.00</div>
       <span class="shorttext"> (After deducting 5% cut to us)</span>
     </div>
     <div class="flex-column">

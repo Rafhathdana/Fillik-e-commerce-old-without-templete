@@ -4,18 +4,18 @@
   <div class="main-div">
     <form id="category-form" action="/admin/addcategory" method="post">
       <div class="category">
-        <h1 class="categoryname">Add Category</h1>
+        <h1 class="categoryname">Add Coupon</h1>
         <select name="categorytype" id="categorytype" class="selectcategory">
-          <option value="Category" selected>Category</option>
-          <option value="Colour">Colour</option>
-          <option value="Pattern">Pattern</option>
-          <option value="GenderType">Gender Type</option>
+          <option value="Category" selected>Coupon Type</option>
+          <option value="Colour">Discount</option>
+          <option value="Pattern">Offer</option>
+          <option value="GenderType">Sale</option>
         </select>
         <input
           type="text"
           class="form-control"
-          name="categoryvalue"
-          id="categoryvalue"
+          name="couponCode"
+          id="couponCode"
           placeholder="check spelling correctly"
         />
         <button type="submit" class="submitbutton">Add</button>
