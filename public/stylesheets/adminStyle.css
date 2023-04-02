@@ -397,3 +397,6 @@ td {
   background: #000000;
   border: 1px solid #ffffff;
 }
+.flex {
+  display: flex;
+}

@@ -10,6 +10,7 @@
           <option value="Colour">Discount</option>
           <option value="Pattern">Offer</option>
           <option value="GenderType">Sale</option>
+          <option value="GenderType">Special Case</option>
         </select>
         <input
           type="text"
@@ -18,19 +19,24 @@
           id="couponCode"
           placeholder="check spelling correctly"
         />
+        <input
+          type="text"
+          class="form-control"
+          name="limit"
+          id="limit"
+          placeholder="Limit the number of person can have these offer"
+        />
         <button type="submit" class="submitbutton">Add</button>
       </div>
-      <% if(locals.categoryout) { %>
+      <% if(locals.couponout) { %>
       <div class="alert alert-danger mt-2" role="alert" style="width: '87%'">
-        <%=categoryout %>
+        <%=couponout %>
       </div>
       <% } %>
     </form>
   </div>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script>
   $(document).ready(function () {
     $.validator.addMethod(

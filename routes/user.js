@@ -43,14 +43,8 @@ router.get("/home", function (req, res, next) {
     user: req.session.user,
   });
 });
-router.get("/productlist/:productname", (req, res, next) => {
-  res.render("user/productlist", {
-    loggedin: false,
-  });
-});
-router.get("/productview", (req, res, next) => {
-  res.render("user/productView", { loggedin: false });
-});
+router.get("/productlist", userController.getProductlist); 
+router.get("/productview", userController.getProductView);
 router.post("/signup", userauth, userController.postSignup);
 router.post("/login", userauth, userController.postSignin);
 router.post("/sendotp", (req, res, next) => {

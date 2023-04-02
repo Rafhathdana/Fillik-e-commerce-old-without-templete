@@ -475,3 +475,23 @@ a {
   background-color: #03292a;
   border: #f2f2f2;
 }
+.flex {
+  display: flex;
+}
+
+.price-input {
+  width: 120px;
+  border-radius: 10px;
+  background: #7b8794ab;
+  border: none;
+  padding-left: 15px;
+  padding-right: 13px;
+}
+.gendercategory {
+  width: 140px;
+  border-radius: 10px;
+  background: #7b8794ab;
+  border: none;
+  padding-left: 10px;
+  padding-right: 10px;
+}

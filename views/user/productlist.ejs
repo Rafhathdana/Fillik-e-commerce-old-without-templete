@@ -1,57 +1,187 @@
 <%- include('../header') -%>
-<div class="container mt-5 mt-md-0" style="padding-top: 60px">
+<div class="flex">
+  <main class="d-flex flex-nowrap position-fixed">
+    <div
+      class="d-flex flex-column flex-shrink-0 p-3 rafcolour"
+      style="width: 180px; margin-top: 63px"
+    >
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li>
+          <div class="filter-item">
+            <h6 for="name-input">Price</h6>
+            <div class="flex mt-1">
+              <label for="min-input">min: </label>
+              <input type="text" id="min-input" class="price-input" />
+            </div>
+            <div class="flex mt-2">
+              <label for="max-input">max:</label
+              ><input type="text" id="max-input" class="price-input" />
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="filter-item">
+            <h6 for="genderType" class="mt-3">category:</h6>
+            <select name="category" id="category" class="gendercategory">
+              <option class="visually-hidden" value="">select category</option>
+              <% for (let i = 0; i < category.length; i++) { %>
+              <option class="selectoption" value="<%= category[i].values %>">
+                <%= category[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="filter-item">
+            <h6 for="genderType" class="mt-3">genderType:</h6>
+            <select name="genderType" id="genderType" class="gendercategory">
+              <% for (let i = 0; i < genderType.length; i++) { %>
+              <option class="selectoption" value="<%= genderType[i].values %>">
+                <%= genderType[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="filter-item">
+            <h6 class="mt-3" for="colour">colour:</h6>
+            <select name="colour" id="colour" class="gendercategory">
+              <% for (let i = 0; i < colour.length; i++) { %>
+              <option class="selectoption" value="<%= colour[i].values %>">
+                <%= colour[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="filter-item">
+            <h6 class="mt-3" for="pattern">pattern:</h6>
+            <select name="pattern" id="pattern" class="gendercategory">
+              <% for (let i = 0; i < pattern.length; i++) { %>
+              <option class="selectoption" value="<%= pattern[i].values %>">
+                <%= pattern[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="filter-item">
+            <h6 class="mt-3" for="sizes">sizes:</h6>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="S"
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Small
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="M"
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                medium
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="L"
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Large
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="XL"
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+                Extra Large
+              </label>
+            </div>
+          </div>
+        </li>
+        <li>
+          <button class="btn btn-outline-light mt-4 mx-4">Apply</button>
+        </li>
+      </ul>
+      <hr />
+    </div>
+  </main>
+
   <div
-    class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center"
+    class="container mt-5 mt-md-0"
+    style="padding-top: 60px; margin-left: 180px"
   >
-    <% for (let i = 0; i < 20; i++) { %>
-    <div class="col">
-      <div
-        class="card"
-        style="
-          border: 1px solid rgba(0, 0, 0, 0.19);
-          border-radius: 10px;
-          max-width: 100%;
-        "
-      >
-        <img
-          src="/images/qw1233.jpg"
-          class="card-img-top rounded-top"
-          style="height: 341px"
-          alt="product image"
-        />
-        <div class="card-body">
-          <h5
-            class="card-title"
-            style="
-              font-family: 'Inria Serif';
-              font-size: 18px;
-              color: #0197a6;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            "
-          >
-            Product Name hehewb hbrwjkc
-          </h5>
-          <p
-            class="card-text"
-            style="font-family: 'Inter'; font-size: 13px; color: #005159"
-          >
-            Green Printed Women Top
-          </p>
-          <p
-            class="card-text"
-            style="
-              font-family: 'Inter';
-              font-weight: 700;
-              font-size: 20px;
-              color: #005159;
-            "
-          >
-            $20
-          </p>
+    <div
+      class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center"
+    >
+      <% for (let i = 0; i < 20; i++) { %>
+      <div class="col">
+        <div
+          class="card"
+          style="
+            border: 1px solid rgba(0, 0, 0, 0.19);
+            border-radius: 10px;
+            max-width: 100%;
+          "
+        >
+          <img
+            src="/images/qw1233.jpg"
+            class="card-img-top rounded-top"
+            style="height: 341px"
+            alt="product image"
+          />
+          <div class="card-body">
+            <h5
+              class="card-title"
+              style="
+                font-family: 'Inria Serif';
+                font-size: 18px;
+                color: #0197a6;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              Product Name hehewb hbrwjkc
+            </h5>
+            <p
+              class="card-text"
+              style="font-family: 'Inter'; font-size: 13px; color: #005159"
+            >
+              Green Printed Women Top
+            </p>
+            <p
+              class="card-text"
+              style="
+                font-family: 'Inter';
+                font-weight: 700;
+                font-size: 20px;
+                color: #005159;
+              "
+            >
+              $20
+            </p>
+          </div>
         </div>
       </div>
+      <% } %>
     </div>
-    <% } %>
   </div>
 </div>

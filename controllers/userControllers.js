@@ -1,7 +1,97 @@
 var User = require("../models/userSchema");
+var Products = require("../models/productSchema");
+var filterproduct = require("../models/filterSchema");
 const bcrypt = require("bcrypt");
 const { response } = require("../app");
 module.exports = {
+  getProductView: async (req, res) => {
+    try {
+      const count = parseInt(req.query.count) || 10;
+      const page = parseInt(req.query.page) || 1;
+      const productsList = await Products.find()
+        .skip((page - 1) * count)
+        .limit(count)
+        .lean();
+
+      const totalPages = Math.ceil((await Products.countDocuments()) / count);
+      const startIndex = (page - 1) * count;
+
+      const endIndex = Math.min(
+        startIndex + count,
+        await Products.countDocuments()
+      );
+
+      res.render("admin/users", {
+        title: "Users List",
+        fullName: req.session.user.fullName,
+        loggedin: req.session.userLoggedIn,
+        productsList,
+        count,
+        page,
+        totalPages,
+        startIndex,
+        endIndex,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  getProductlist: async (req, res, next) => {
+    try {
+      const count = parseInt(req.query.count) || 10;
+      const page = parseInt(req.query.page) || 1;
+      const productsList = await Products.find()
+        .skip((page - 1) * count)
+        .limit(count)
+        .lean();
+
+      const totalPages = Math.ceil((await Products.countDocuments()) / count);
+      const startIndex = (page - 1) * count;
+
+      const endIndex = Math.min(
+        startIndex + count,
+        await Products.countDocuments()
+      );
+      let category = await filterproduct.find({ categoryname: "Category" });
+      let colour = await filterproduct.find({ categoryname: "Colour" });
+      let pattern = await filterproduct.find({ categoryname: "Pattern" });
+      let genderType = await filterproduct.find({ categoryname: "GenderType" });
+      if (req.session.userLoggedIn) {
+        res.render("user/productlist", {
+          title: "Users List",
+          fullName: req.session.user.fullName,
+          loggedin: req.session.userLoggedIn,
+          productsList,
+          count,
+          page,
+          totalPages,
+          startIndex,
+          endIndex,
+          category,
+          colour,
+          pattern,
+          genderType,
+        });
+      }
+      res.render("user/productlist", {
+        title: "Product List",
+        loggedin: false,
+        productsList,
+        count,
+        page,
+        totalPages,
+        startIndex,
+        endIndex,
+        category,
+        colour,
+        pattern,
+        genderType,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   postSignup: async (req, res) => {
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
