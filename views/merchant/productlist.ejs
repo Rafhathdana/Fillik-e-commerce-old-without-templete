@@ -1,54 +1,84 @@
+<header><%- include('header') -%></header>
 <body class="rafcolour">
-  <header><%- include('header') -%></header>
-  <br />
-  <br />
-  <br />
+  <div class="mainheading">Product Details</div>
+  <div class="flex" style="margin-left: 80%">
+    <div class="dropdown me-auto">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        count
+      </button>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="?count=10&page=1">10</a></li>
+        <li><a class="dropdown-item" href="?count=25&page=1">25</a></li>
+        <li><a class="dropdown-item" href="?count=50&page=1">50</a></li>
+      </ul>
+    </div>
+  </div>
+  <%if(locals.endIndex>0){%> <% for (let i = locals.startIndex; i <
+  locals.endIndex; i++) { %>
+
   <div class="outer-box">
     <img class="inner-img" src="/images/qw1233.jpg" alt="Product Image" />
     <div class="productinfo">
       <div class="flex">
         <div class="product-id">Product ID:</div>
-        <div class="product-id-value"><%= product.category %></div>
+        <div class="product-id-value"><%= productList[i].productid %></div>
       </div>
       <div class="flex">
         <div class="product-id">Status:</div>
-        <%if(product.isActive){%>
+        <%if(productList[i].isActive){%>
 
         <div class="status-value">Active</div>
         <% } else{ %>
         <div class="status-value">InActive</div>
         <% } %>
       </div>
-    </div> 
+    </div>
     <div class="text-block">
       <div class="plain-pattern">
-        Color: <span class="pink-color"><%= product.colour %> </span>
+        Color:
+        <span class="pink-color"><%= productList[i].colour %> </span>
       </div>
       <div class="plain-pattern">
-        Pattern: <span class="pink-color"><%= product.pattern %></span>
+        Pattern:
+        <span class="pink-color"><%= productList[i].pattern %></span>
       </div>
       <div class="plain-pattern">
-        Gender Type: <span class="pink-color"><%= product.genderType %></span>
+        Gender Type:
+        <span class="pink-color"><%= productList[i].genderType %></span>
       </div>
       <div class="plain-pattern">
-        Category: <span class="pink-color"><%= product.category %></span>
+        Category:
+        <span class="pink-color"><%= productList[i].category %></span>
       </div>
     </div>
     <div class="sizes-box">
       <div class="heading">Quantity</div>
       <div class="sizes">
-        <div class="size">Small: <%= product.category %></div>
-        <div class="size">Medium: <%= product.category %></div>
-        <div class="size">large: <%= product.category %></div>
-        <div class="size">X-Large: <%= product.category %></div>
+        <div class="size">Small: <%= productList[i].Quantity.small %></div>
+        <div class="size">Medium: <%= productList[i].Quantity.medium %></div>
+        <div class="size">large: <%= productList[i].Quantity.large %></div>
+        <div class="size">
+          X-Large: <%= productList[i].Quantity.extraLarge %>
+        </div>
       </div>
     </div>
 
     <div class="prices mx-auto">
       <div class="product-price">Product Price:</div>
-      <div class="product-price-value">RS.<%= product.category %>.00</div>
+      <div class="product-price-value">
+        RS.<%= productList[i].orginalPrice %>
+      </div>
       <div class="product-price">Actual Price:</div>
-      <div class="product-price-value">RS.<%= product.category %>70.00</div>
+      <div class="product-price-value">
+        RS.<%= productList[i].ourPrice/100 %>
+      </div>
       <span class="shorttext"> (After deducting 5% cut to us)</span>
     </div>
     <div class="flex-column">
@@ -56,8 +86,72 @@
         <span class="action-text">Edit</span>
       </div>
       <div class="action-box1">
-        <span class="action-text">Delete</span>
+        <% if ( productList[i].Orders.small.length == 1 &&
+        productList[i].Orders.medium.length == 1 &&
+        productList[i].Orders.large.length == 1 &&
+        productList[i].Orders.extraLarge.length == 1 ) { %><span
+          class="action-text"
+          onclick="confirmDelete('<%= productList[i]._id %>')"
+        >
+          Delete</span
+        >
+        <%} else{%>
+        <span
+          class="action-text"
+          onclick="confirmDelete('<%= productList[i]._id %>')"
+        >
+          Delete</span
+        ><% } %>
       </div>
     </div>
   </div>
+  <% } %> <% } else{%>
+  <div class="mx-auto justify-content-center d-flex">
+    <a class="mx-auto" href="/merchant/addproduct">
+      Product Empty!<br />
+      Click here to ADD Product</a
+    >
+  </div>
+  <% } %>
 </body>
+<script>
+  function confirmStatus(userId) {
+    if (confirm("Are you sure you want to Block this user?")) {
+      fetch(`/merchant/statusUpdateProduct/${userId}`, { method: "POST" })
+        .then((res) => {
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            alert("unable to update user");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Internal server error");
+        });
+    } else {
+      // User cancelled, do nothing
+      console.log("User cancelled Blocking of user ID", userId);
+    }
+  }
+  function confirmDelete(userId) {
+    if (confirm("Are you sure you want to delete this user?")) {
+      // User confirmed, redirect to the delete user URL with the user's _id
+      fetch(`/merchant/deleteProduct/${userId}`, { method: "DELETE" })
+        .then((res) => {
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            alert("unable to delete uder");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Internal server error");
+        });
+    } else {
+      // User cancelled, do nothing
+      console.log("User cancelled deletion of user ID", userId);
+    }
+  }
+</script>

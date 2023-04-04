@@ -64,34 +64,35 @@
           </form>
           <div id="otp-section" class="d-none">
             <div class="form-floating mb-3">
-              <form>
-                <h6>OTP</h6>
-                <div class="pin-input">
-                  <% for (let i = 1; i <= 6; i++) { %>
-                  <input
-                    type="number"
-                    class="form-control pin-box"
-                    id="box<%= i %>"
-                    maxlength="1"
-                  />
-                  <% } %>
-                </div>
-                <button
-                  class="btn btn-verify-otp btn-primary btn-lg mt-3"
-                  type="button"
-                >
-                  Verify OTP
-                </button>
-              </form>
+              <!-- <input
+                type="text"
+                class="form-control"
+                id="otp"
+                name="Otp"
+                placeholder="Enter Otp"
+              /> -->
+              <label for="otp">OTP</label>
+              <div class="pin-input">
+                <% for (let i = 1; i <= 6; i++) { %>
+                <input
+                  type="number"
+                  class="pin-box"
+                  id="box<%= i %>"
+                  maxlength="1"
+                />
+                <% } %>
+              </div>
             </div>
-            <div class="d-flex justify-content-between links">
-              <a
-                onclick="normalSection()"
-                class="text-white d-none"
-                id="present"
-                >back</a
-              >
+            <div class="d-grid">
+              <button class="btn btn-verify-otp btn-lg mt-3" type="button">
+                Verify OTP
+              </button>
             </div>
+          </div>
+          <div class="d-flex justify-content-between links">
+            <a onclick="normalSection()" class="text-white d-none" id="present"
+              >back</a
+            >
           </div>
         </div>
       </div>
@@ -193,24 +194,9 @@
         }
       },
     });
-  });
-</script>
-<script>
-  const inputs = document.querySelectorAll(".pin-box");
-
-  inputs.forEach((input, index) => {
-    input.addEventListener("keydown", (event) => {
-      if (event.key >= 0 && event.key <= 9) {
-        inputs[index].value = event.key;
-        inputs[index].style.background = "#ffffff";
-        if (index < inputs.length - 1) {
-          inputs[index + 1].focus();
-        }
-        event.preventDefault();
-      } else if (event.key === "Backspace" && index > 0) {
-        inputs[index - 1].focus();
-        inputs[index - 1].value = "";
-        event.preventDefault();
+    $(".pin-box").keyup(function () {
+      if ($(this).val().length === $(this).attr("maxlength")) {
+        $(this).next().focus();
       }
     });
   });
@@ -227,7 +213,6 @@
       const mobile = document.getElementById("mobile").value;
       if (mobile) {
         sendOTP(mobile);
-        // showOTPSection();
       } else {
         normalSection();
       }
@@ -282,22 +267,15 @@
   }
   const verifyOTPButton = document.querySelector(".btn-verify-otp");
   verifyOTPButton.addEventListener("click", () => {
-    let otp = document.getElementById("box1").value;
-    otp += document.getElementById("box2").value;
-    otp += document.getElementById("box3").value;
-    otp += document.getElementById("box4").value;
-    otp += document.getElementById("box5").value;
-    otp += document.getElementById("box6").value;
-    console.log(otp);
-    if (verifyOTP(otp)) {
+    const otp = document.getElementById("otp").value;
+    if (verifyotp(otp)) {
       signinUser();
     } else {
       alert("Invalid OTP!");
     }
   });
 
-  async function verifyOTP(otp) {
-    console.log(otp);
+  function verifyOTP(otp) {
     fetch("/verifyotp", {
       method: "POST",
       body: JSON.stringify({
@@ -328,7 +306,9 @@
       })
       .catch((error) => {
         console.error(error);
-        alert("An error occurred while verifying OTP. Please try again later.");
+        alert(
+          "An error occurred while sending verifying OTP. Please try again later."
+        );
       });
   }
   function signinUser() {

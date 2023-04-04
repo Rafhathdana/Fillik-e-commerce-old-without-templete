@@ -495,3 +495,11 @@ a {
   padding-left: 10px;
   padding-right: 10px;
 }
+.pin-input input[type="number"]::-webkit-inner-spin-button,
+.pin-input input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.form-floating:not(.form-control:disabled)::before {
+  position: initial;
+}

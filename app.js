@@ -3,10 +3,12 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const bodyParser = require("body-parser");
 
 var usersRouter = require("./routes/user");
 var merchantRouter = require("./routes/merchant");
 var adminRouter = require("./routes/admin");
+const multer = require("multer");
 
 var app = express();
 var db = require("./config/connection");
@@ -28,6 +30,8 @@ db.connect((err) => {
 app.use("/", usersRouter);
 app.use("/merchant/", merchantRouter);
 app.use("/admin/", adminRouter);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.set("view cache", false);
 

@@ -132,9 +132,11 @@
     <div
       class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 justify-content-center"
     >
-      <% for (let i = 0; i < 20; i++) { %>
+      <% for (let i = locals.startIndex; i < locals.endIndex; i++) { %>
       <div class="col">
-        <div
+        <a
+          href="/productview/<%=productsList[i]._id %>"
+          <div
           class="card"
           style="
             border: 1px solid rgba(0, 0, 0, 0.19);
@@ -143,7 +145,7 @@
           "
         >
           <img
-            src="/images/qw1233.jpg"
+            src="/images/<%=productsList[i].images[0]%>"
             class="card-img-top rounded-top"
             style="height: 341px"
             alt="product image"
@@ -159,13 +161,13 @@
                 text-overflow: ellipsis;
               "
             >
-              Product Name hehewb hbrwjkc
+              <%= locals.productsList[i].name %>
             </h5>
             <p
               class="card-text"
               style="font-family: 'Inter'; font-size: 13px; color: #005159"
             >
-              Green Printed Women Top
+              <%= productsList[i].description %>
             </p>
             <p
               class="card-text"
@@ -176,10 +178,18 @@
                 color: #005159;
               "
             >
-              $20
+              RS.<%=((productsList[i].ourPrice)/100)%>
             </p>
+            <div class="product">
+              <span>M.R.P : </span>
+              <span><%= productsList[i].orginalPrice %></span>
+              <% let value = parseInt(productsList[i].orginalPrice) -
+              parseInt(productsList[i].ourPrice/100); let discount = (value /
+              parseInt(productsList[i].orginalPrice)) * 100; %>
+              <span>Discount: <%= discount.toFixed(0) %>%</span>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
       <% } %>
     </div>

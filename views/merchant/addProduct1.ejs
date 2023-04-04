@@ -1,0 +1,193 @@
+<body class="rafcolour">
+    <header><%- include('header') -%></header>
+    <div class="mainheading">Add Products</div>
+    <div class="main-div">
+      <!-- CATEGORY -->
+      <form method="POST" enctype="multipart/form-data">
+        <div class="category">
+          <div class="category">
+            <h1 class="categoryname">Name of the Product</h1>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              placeholder="Enter the Name of..."
+            />
+          </div>
+          <div class="category">
+            <h1 class="categoryname">Short Description</h1>
+            <input
+              type="text"
+              class="form-control"
+              name="description"
+              placeholder="Enter the Description..."
+            />
+          </div>
+          <div class="category">
+            <h1 class="categoryname">Gender Type</h1>
+            <select name="genderType" id="genderType" class="selectcategory">
+              <% for (let i = 0; i < genderType.length; i++) { %>
+              <option class="selectoption" value="<%= genderType[i].values %>">
+                <%= genderType[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+          <div class="category">
+            <h1 class="categoryname">Add Category</h1>
+            <select name="category" id="category" class="selectcategory">
+              <% for (let i = 0; i < category.length; i++) { %>
+              <option class="selectoption" value="<%= category[i].values %>">
+                <%= category[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+          <div class="category">
+            <h1 class="categoryname">Colour</h1>
+            <select name="colour" id="colour" class="selectcategory">
+              <% for (let i = 0; i < colour.length; i++) { %>
+              <option class="selectoption" value="<%= colour[i].values %>">
+                <%= colour[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+          <div class="category">
+            <h1 class="categoryname">Pattern</h1>
+            <select name="pattern" id="pattern" class="selectcategory">
+              <% for (let i = 0; i < pattern.length; i++) { %>
+              <option class="selectoption" value="<%= pattern[i].values %>">
+                <%= pattern[i].values %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+          <div class="category">
+            <h1 class="categoryname">Orginal Price:</h1>
+            <input
+              type="text"
+              class="form-control"
+              name="orginalPrice"
+              placeholder="Enter the actual price..."
+            />
+          </div>
+          <div class="category">
+            <h1 class="categoryname">Your Price:</h1>
+            <input
+              type="text"
+              class="form-control"
+              name="sellerPrice"
+              placeholder="Enter the actual price..."
+            />
+          </div>
+        </div>
+        <div class="sizes-and-quantity flex-colum">
+          <h1 class="categoryname">Sizes and Quantity</h1>
+          <div class="size">
+            <h2>S</h2>
+            <span class="spanning">:</span>
+            <input type="number" name="small" class="form-controling" />
+          </div>
+          <div class="size">
+            <h2>M</h2>
+            <span class="spanning">:</span>
+            <input type="number" name="medium" class="form-controling" />
+          </div>
+          <div class="size">
+            <h2>L</h2>
+            <span class="spanning">:</span>
+            <input type="number" name="large" class="form-controling" />
+          </div>
+          <div class="size">
+            <h2>XL</h2>
+            <span class="spanning">:</span>
+            <input type="number" name="extralarge" class="form-controling" />
+          </div>
+        </div>
+        <!-- HTML code using EJS syntax -->
+  
+        <div class="form-group">
+          <label class="form-label categoryname" for="image-input"
+            >Main Image</label
+          >
+          <div class="form-file">
+            <input
+              type="file"
+              class="form-file-input"
+              id="images"
+              name="images"
+              accept="image/*"
+              multiple
+              onchange="previewImages(event)"
+            />
+            <label class="form-file-label" for="images">
+              <span class="form-file-text">Choose a file...</span>
+              <span class="form-file-button">Browse</span>
+            </label>
+          </div>
+        </div>
+  
+        <div id="preview-container" class="row gx-3 mt-5"></div>
+  
+        <!-- Image preview template -->
+        <template id="image-preview-template">
+          <div class="col-md-2">
+            <div class="raf">
+              <img class="raf-img-top" src="" alt="" />
+              <div class="raf-body">
+                <button
+                  type="button"
+                  class="btn1 btn-sm"
+                  onclick="removeImage(event)"
+                >
+                  X
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
+        <!-- SUBMIT BUTTON -->
+        <button type="submit" class="submitbutton">Add Product</button>
+  
+        <!-- Custom JavaScript -->
+        <script>
+          // function previewImages(event) {
+          //   const previewContainer = document.getElementById("preview-container");
+          //   previewContainer.innerHTML = ""; // Clear previous previews
+          //   const files = event.target.files;
+          //   const productId = document.getElementById("productId").value; // Get the product ID from a hidden input field
+          //   for (let i = 0; i < files.length; i++) {
+          //     const file = files[i];
+          //     const inputName = "product" + productId + i; // Generate the input name based on the product ID and the index
+          //     const imagePreviewTemplate = document.getElementById(
+          //       "image-preview-template"
+          //     );
+          //     const imagePreview = imagePreviewTemplate.content.cloneNode(true);
+          //     imagePreview.querySelector("img").src = URL.createObjectURL(file);
+          //     imagePreview.querySelector("img").alt = file.name;
+          //     const input = document.createElement("input");
+          //     input.type = "hidden";
+          //     input.name = inputName;
+          //     input.value = file.name;
+          //     imagePreview.querySelector(".raf-body").appendChild(input);
+          //     previewContainer.appendChild(imagePreview);
+          //   }
+          // }
+  
+          // function removeImage(event) {
+          //   const raf = event.target.closest(".raf");
+          //   raf.remove();
+          //   const previewContainer = document.getElementById("preview-container");
+          //   const files = document.getElementById("images").files;
+          //   if (previewContainer.children.length < files.length) {
+          //     document.getElementById("images").value = ""; // Clear selected files if images were removed
+          //   }
+          // }
+        </script>
+      </form>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  

@@ -3,11 +3,7 @@
   <div class="mainheading">Add Products</div>
   <div class="main-div">
     <!-- CATEGORY -->
-    <form
-      action="/merchant/addproduct"
-      method="POST"
-      enctype="multipart/form-data"
-    >
+    <form method="POST" enctype="multipart/form-data">
       <div class="category">
         <div class="category">
           <h1 class="categoryname">Name of the Product</h1>
@@ -68,11 +64,20 @@
           </select>
         </div>
         <div class="category">
-          <h1 class="categoryname">Actual Price:</h1>
+          <h1 class="categoryname">Orginal Price:</h1>
           <input
             type="text"
             class="form-control"
-            name="actualPrice"
+            name="orginalPrice"
+            placeholder="Enter the actual price..."
+          />
+        </div>
+        <div class="category">
+          <h1 class="categoryname">Your Price:</h1>
+          <input
+            type="text"
+            class="form-control"
+            name="sellerPrice"
             placeholder="Enter the actual price..."
           />
         </div>
@@ -97,7 +102,7 @@
         <div class="size">
           <h2>XL</h2>
           <span class="spanning">:</span>
-          <input type="number" name="extralarge" class="form-controling" />
+          <input type="number" name="extraLarge" class="form-controling" />
         </div>
       </div>
       <!-- HTML code using EJS syntax -->
@@ -165,6 +170,28 @@
             reader.readAsDataURL(file);
           }
         }
+        // function previewImages(event) {
+        //   const previewContainer = document.getElementById("preview-container");
+        //   previewContainer.innerHTML = ""; // Clear previous previews
+        //   const files = event.target.files;
+        //   const productId = document.getElementById("productId").value; // Get the product ID from a hidden input field
+        //   for (let i = 0; i < files.length; i++) {
+        //     const file = files[i];
+        //     const inputName = "product" + productId + i; // Generate the input name based on the product ID and the index
+        //     const imagePreviewTemplate = document.getElementById(
+        //       "image-preview-template"
+        //     );
+        //     const imagePreview = imagePreviewTemplate.content.cloneNode(true);
+        //     imagePreview.querySelector("img").src = URL.createObjectURL(file);
+        //     imagePreview.querySelector("img").alt = file.name;
+        //     const input = document.createElement("input");
+        //     input.type = "hidden";
+        //     input.name = inputName;
+        //     input.value = file.name;
+        //     imagePreview.querySelector(".raf-body").appendChild(input);
+        //     previewContainer.appendChild(imagePreview);
+        //   }
+        // }
 
         function removeImage(event) {
           const raf = event.target.closest(".raf");

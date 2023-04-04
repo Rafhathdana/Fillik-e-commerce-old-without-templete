@@ -9,7 +9,10 @@
         <div class="productBox">
           <div class="row">
             <div class="col-lg-12 d-flex justify-content-center">
-              <img class="productImg" src="/images/qw1233.jpg" />
+              <img
+                class="productImg"
+                src="/images/<%=productItem.images[0]%>"
+              />
             </div>
             <div class="col-lg-12">
               <div class="d-flex justify-content-center">
@@ -34,8 +37,8 @@
       </div>
       <div class="col-lg-6">
         <div class="productDetails">
-          <h1 class="productHead">Green Head Shirt</h1>
-          <p class="productDesc">The product was so nice</p>
+          <h1 class="productHead"><%= locals.productItem.name %></h1>
+          <p class="productDesc"><%= productItem.description %></p>
           <div class="d-flex">
             <div class="sizedesc">Size:</div>
             <div class="sizeBox mx-2">S</div>
@@ -45,11 +48,19 @@
           </div>
           <div class="quantity d-flex align-items-center mt-3">
             <div class="sizedesc">Quantity:</div>
-            <div class="minus btn btn-outline-secondary">+</div>
-            <div class="quantityNumber mx-2">9</div>
-            <div class="plus btn btn-outline-secondary">-</div>
+            <div class="minus btn btn-outline-secondary">-</div>
+            <div class="quantityNumber mx-2">1</div>
+            <div class="plus btn btn-outline-secondary">+</div>
           </div>
-          <h3 class="sizedesc mt-3">Rate: 650rs</h3>
+          <h3 class="sizedesc mt-3">RS.<%=((productItem.ourPrice))%></h3>
+          <div class="product">
+            <span>M.R.P : </span>
+            <span><%= productItem.orginalPrice %></span>
+            <% let value = parseInt(productItem.orginalPrice) -
+            parseInt(productItem.ourPrice); let discount = (value /
+            parseInt(productItem.orginalPrice)) * 100; %>
+            <span>Discount: <%= discount.toFixed(0) %>%</span>
+          </div>
           <button class="ProductAddtoCart btn btn-primary mt-3">
             Add To Cart
           </button>

@@ -7,6 +7,10 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    merchantid: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -27,11 +31,16 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    actualPrice: {
+    orginalPrice: {
       type: Number,
       required: true,
     },
-    sellPrice: {
+    ourPrice: {
+      type: Number,
+      get: (v) => (v / 100).toFixed(2),
+      set: (v) => Math.round(v * 100),
+    },
+    sellerPrice: {
       type: Number,
       required: true,
     },
@@ -52,6 +61,21 @@ const productSchema = new Schema(
       },
       extraLarge: {
         type: Number,
+      },
+    },
+    Orders: {
+      type: Object,
+      small: {
+        type: Array,
+      },
+      medium: {
+        type: Array,
+      },
+      large: {
+        type: Array,
+      },
+      extraLarge: {
+        type: Array,
       },
     },
     images: {

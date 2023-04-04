@@ -13,7 +13,7 @@
     />
 
     <!-- Custom styles for this template -->
-    <link href="/stylesheets/adminStyle.css" rel="stylesheet" />
+    <link href="/stylesheets/merchantStyle.css" rel="stylesheet" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
@@ -45,7 +45,8 @@
             </li> -->
           </ul>
           <ul class="navbar-nav mx-md-4">
-            <% if(merchantLoggedin) { %> <% if (title==="product"){ %>
+            <% if(merchantLoggedin || locals.merchantLoggedin) { %> <% if
+            (title==="product"){ %>
             <li class="nav-item">
               <a class="nav-link" href="addproduct">Add Product</a>
             </li>
@@ -62,9 +63,13 @@
                 Products
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Add Product</a></li>
                 <li>
-                  <a class="dropdown-item" href="/admin/userList"
+                  <a class="dropdown-item" href="/merchant/addproduct"
+                    >Add Product</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/merchant/userList"
                     >View Product</a
                   >
                 </li>

@@ -79,7 +79,7 @@ module.exports = {
     res.render("admin/login", {
       title: "admin",
       err_msg: req.session.adminerrmsg,
-      adminLoggedin: false,
+      adminLoggedin: null,
     });
     req.session.errmsg = null;
   },
@@ -87,7 +87,7 @@ module.exports = {
     res.render("admin/signup", {
       title: "admin",
       err_msg: req.session.adminerrmsg,
-      adminLoggedin: false,
+      adminLoggedin: null,
     });
     req.session.errmsg = null;
   },
@@ -168,28 +168,41 @@ module.exports = {
       console.log(error);
     }
   },
-
   postSignup: async (req, res) => {
     try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      const newAdmin = new Admin({
-        fullName: req.body.fullName,
-        email: req.body.email,
-        password: hashedPassword,
-        mobile: req.body.mobile,
-        status: false,
-        emailverified: false,
-        mobileverification: true,
-        isActive: true,
-      });
-      Admin.create(newAdmin);
-      console.log(newAdmin);
-      res.redirect("/admin/login");
+      const vAdmin = await Admin.findOne({
+        $or: [{ email: req.body.email }, { mobile: req.body.mobile }],
+      }).exec();
+
+      if (!vAdmin) {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const newAdmin = new Admin({
+          fullName: req.body.fullName,
+          email: req.body.email,
+          password: hashedPassword,
+          mobile: req.body.mobile,
+          status: false,
+          emailverified: false,
+          mobileverification: true,
+          isActive: true,
+        });
+
+        await Admin.create(newAdmin);
+        req.session.adminerrmsg = null;
+        console.log(newAdmin);
+        res.redirect("/admin/login");
+      } else {
+        // User exists
+        req.session.adminerrmsg = "email or mobile phone exists Already";
+        console.log(error);
+        res.redirect("/admin/signup");
+      }
     } catch (error) {
       console.log(error);
       res.redirect("/admin/signup");
     }
   },
+
   statusUserUpdate: async (req, res, next) => {
     try {
       const datainuser = await users.findById(req.params.userId);

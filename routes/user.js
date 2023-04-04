@@ -18,11 +18,11 @@ function verify(req, res, next) {
     res.redirect("/login");
   }
 }
-router.get("/", function (req, res, next) {
+router.get("/", userauth, function (req, res, next) {
   res.render("index", { title: "Express", loggedin: false });
 });
 router.get("/signup", userauth, function (req, res, next) {
-  res.render("user/signup", {
+  res.render("user/signup2", {
     title: "user",
     err_msg: req.session.errmsg,
     loggedin: false,
@@ -37,31 +37,13 @@ router.get("/login", userauth, function (req, res, next) {
   });
   req.session.errmsg = null;
 });
-router.get("/home", function (req, res, next) {
-  res.render("user/productlist", {
-    loggedin: req.session.userLoggedIn,
-    user: req.session.user,
-  });
-});
-router.get("/productlist", userController.getProductlist); 
-router.get("/productview", userController.getProductView);
+router.get("/home", verify, userController.getProductlist);
+router.get("/productlist", userController.getProductlist);
+router.get("/productview/:productId", userController.getProductView);
 router.post("/signup", userauth, userController.postSignup);
 router.post("/login", userauth, userController.postSignin);
-router.post("/sendotp", (req, res, next) => {
-  console.log(req.body.mobile);
-  req.session.otP = Math.floor(100000 + Math.random() * 900000);
-  otp
-    .OTP(req.body.mobile, req.session.otP)
-    .then((response) => {
-      response.success = true;
-      res
-        .status(200)
-        .send({ response, success: true, message: "OTP Sent successfully" });
-    })
-    .catch((error) => {
-      res.status(500).send({ success: false, message: "Error sending OTP" });
-    });
-});
+router.post("/sendotp", userController.sendOtp);
+router.post("/verifyotp", userController.verifyOtp);
 router.get("/logout", function (req, res) {
   req.session.destroy(function (err) {
     if (err) {
