@@ -1,4 +1,8 @@
-<%- include('headsort') -%>
+<%- include('../header') -%>
+<head>
+  <link rel="stylesheet" href="/magiczoomplus/magiczoomplus.css" />
+  <script src="/magiczoomplus/magiczoomplus.js"></script>
+</head>
 <br />
 <br />
 <br />
@@ -9,27 +13,30 @@
         <div class="productBox">
           <div class="row">
             <div class="col-lg-12 d-flex justify-content-center">
-              <img
-                class="productImg"
-                src="/images/<%=productItem.images[0]%>"
-              />
-            </div>
-            <div class="col-lg-12">
-              <div class="d-flex justify-content-center">
-                <button class="btn btn-outline-secondary mx-2"></button>
-                <!-- selecting next image -->
-                <button class="btn btn-outline-secondary mx-2"></button>
-                <!-- selecting next image -->
-                <button class="btn btn-outline-secondary mx-2"></button>
-                <!-- selecting next image -->
-                <!-- <button class="btn btn-outline-secondary mx-2"></button> -->
-                <!-- selecting next image -->
-                <!-- <button class="btn btn-outline-secondary mx-2"></button> -->
-                <!-- selecting next image -->
-                <!-- <button class="btn btn-outline-secondary mx-2"></button> -->
-                <!-- selecting next image -->
-                <!-- <button class="btn btn-outline-secondary mx-2"></button> -->
-                <!-- selecting next image -->
+              <div class="images" style="width: 75px">
+                <div class="flex-colum">
+                  <% for (let i = 0; i < productItem.images.length; i++) { %>
+                  <img
+                    class="productsideImg"
+                    src="/images/<%=productItem.images[i]%>"
+                    onclick="selectProductImage('<%=productItem.images[i]%>')"
+                  />
+                  <% } %>
+                </div>
+              </div>
+              <div class="productImgWrapper" style="height: 450px">
+                <a
+                  href="/images/<%=productItem.images[0]%>"
+                  class="MagicZoom"
+                  data-options="zoomPosition: inner"
+                >
+                  <img
+                    style="height: 450px"
+                    data-hash="product-1"
+                    class="productImg"
+                    src="/images/<%=productItem.images[0]%>"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
@@ -118,5 +125,20 @@
     console.log("Size: " + selectedSize.textContent);
     console.log("Quantity: " + quantity);
     console.log("Rate: " + rate);
+  });
+</script>
+<script>
+  const smallImages = document.querySelectorAll(".flex-colum img");
+  const largeImage = document.querySelector(".productImgWrapper img");
+  const largeAhref = document.querySelector(".productImgWrapper a");
+  const overlay = document.createElement("div");
+  overlay.classList.add("overlay");
+  largeImage.parentElement.appendChild(overlay);
+  smallImages.forEach((img, index) => {
+    img.addEventListener("mouseover", () => {
+      const imgSrc = img.getAttribute("src");
+      largeImage.setAttribute("src", imgSrc);
+      largeAhref.setAttribute("href", imgSrc);
+    });
   });
 </script>

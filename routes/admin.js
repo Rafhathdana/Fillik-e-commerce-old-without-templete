@@ -1,57 +1,49 @@
 var express = require("express");
 var router = express.Router();
 const adminController = require("../controllers/adminControllers");
-router.get("/", adminController.adminauth, adminController.getLogin);
 
-router.get(
-  "/login",
-  (req, res, next) => {
-    console.log("hai");
+function adminAuth(req, res, next) {
+  if (req.session && req.session.admin && req.session.adminLoggedIn) {
+    res.redirect("/admin/home");
+  } else {
     next();
-  },
-  adminController.adminauth,
-  adminController.getLogin
-);
-router.get("/home", adminController.verify, adminController.getHome);
-router.get("/userList", adminController.verify, adminController.getUser);
-router.get(
-  "/merchantList",
-  adminController.verify,
-  adminController.getMerchant
-);
-router.get(
-  "/addcategory",
-  adminController.verify,
-  adminController.getAddCategory
-);
-router.get(
-  "/viewcategory",
-  adminController.verify,
-  adminController.getViewCategory
-);
-router.post(
-  "/addcategory",
-  adminController.verify,
-  adminController.postAddCategory
-);
+  }
+}
+function adminVerify(req, res, next) {
+  if (req.session && req.session.admin && req.session.adminLoggedIn) {
+    console.log(req.session.adminLoggedIn);
+    next();
+  } else {
+    res.redirect("/admin/login");
+  }
+}
 
-router.post("/login", adminController.adminauth, adminController.postSignin);
-router.get("/signup", adminController.adminauth, adminController.getSignUp);
-router.post("/signup", adminController.adminauth, adminController.postSignup);
+router.get("/", adminAuth, adminController.getLogin);
+router.get("/login", adminAuth, adminController.getLogin);
+router.get("/home", adminVerify, adminController.getHome);
+router.get("/userList", adminVerify, adminController.getUser);
+router.get("/merchantList", adminVerify, adminController.getMerchant);
+router.get("/addcategory", adminVerify, adminController.getAddCategory);
+router.get("/viewcategory", adminVerify, adminController.getViewCategory);
+router.post("/addcategory", adminVerify, adminController.postAddCategory);
+
+router.post("/login", adminAuth, adminController.postSignin);
+router.get("/signup", adminAuth, adminController.getSignUp);
+router.post("/signup", adminAuth, adminController.postSignup);
 
 router.post(
   "/statusUserUpdate/:userId",
-  adminController.verify,
+  adminVerify,
   adminController.statusUserUpdate
 );
 router.delete(
   "/deleteCategory/:Id",
-  adminController.verify,
+  adminVerify,
   adminController.deleteCategory
 );
 router.post(
   "/statusMerchantUpdate/:userId",
-  adminController.verify,
+  adminVerify,
   adminController.statusMerchantUpdate
 );
 

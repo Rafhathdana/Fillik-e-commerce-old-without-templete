@@ -9,21 +9,6 @@ const {
 const bcrypt = require("bcrypt");
 const { response } = require("../app");
 module.exports = {
-  adminauth: (req, res, next) => {
-    if (req.session && req.session.admin && req.session.adminLoggedIn) {
-      res.redirect("/admin/home");
-    } else {
-      next();
-    }
-  },
-  verify: (req, res, next) => {
-    if (req.session && req.session.admin && req.session.adminLoggedIn) {
-      console.log(req.session.adminLoggedIn);
-      next();
-    } else {
-      res.redirect("/admin/login");
-    }
-  },
   getHome: async (req, res, next) => {
     const userslist = await users.find().limit(10);
     res.render("admin/users", {
@@ -81,7 +66,7 @@ module.exports = {
       err_msg: req.session.adminerrmsg,
       adminLoggedin: null,
     });
-    req.session.errmsg = null;
+    req.session.adminerrmsg = null;
   },
   getSignUp: (req, res, next) => {
     res.render("admin/signup", {
@@ -89,7 +74,7 @@ module.exports = {
       err_msg: req.session.adminerrmsg,
       adminLoggedin: null,
     });
-    req.session.errmsg = null;
+    req.session.adminerrmsg = null;
   },
   getAddCategory: (req, res, next) => {
     res.render("admin/addCategory", {
@@ -101,34 +86,46 @@ module.exports = {
     req.session.categoryout = null;
   },
   getViewCategory: async (req, res, next) => {
-    const category = await filterproduct.find({ categoryname: "Category" });
-    const colour = await filterproduct.find({ categoryname: "Colour" });
-    const pattern = await filterproduct.find({ categoryname: "Pattern" });
-    const genderType = await filterproduct.find({ categoryname: "GenderType" });
+    try {
+      const category = await filterproduct.find({ categoryname: "Category" });
+      const colour = await filterproduct.find({ categoryname: "Colour" });
+      const pattern = await filterproduct.find({ categoryname: "Pattern" });
+      const genderType = await filterproduct.find({
+        categoryname: "GenderType",
+      });
 
-    res.render("admin/viewCategory", {
-      title: "addCategory",
-      fullName: req.session.admin.fullName,
-      adminLoggedin: req.session.adminLoggedIn,
-      category,
-      colour,
-      pattern,
-      genderType,
-    });
+      res.render("admin/viewCategory", {
+        title: "addCategory",
+        fullName: req.session.admin.fullName,
+        adminLoggedin: req.session.adminLoggedIn,
+        category,
+        colour,
+        pattern,
+        genderType,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   postAddCategory: async (req, res, next) => {
     try {
-      console.log(req.body.categorytype);
-      console.log(req.body.categoryvalue);
+      let categoryValuein = req.body.categoryvalue;
+      categoryValuein = categoryValuein
+        .toLowerCase()
+        .split(" ")
+        .map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
       const newCategory = await filterproduct.findOne({
         categoryname: req.body.categorytype,
-        values: req.body.categoryvalue,
+        values: categoryValuein,
       });
       if (!newCategory) {
         const newData = new filterproduct({
           categoryname: req.body.categorytype,
-          values: req.body.categoryvalue,
+          values: categoryValuein,
         });
         filterproduct.create(newData);
         req.session.categoryout = "Added";
@@ -147,21 +144,28 @@ module.exports = {
       const newAdmin = await Admin.findOne({ email: req.body.email });
       console.log(req.body.email);
       if (newAdmin) {
-        bcrypt.compare(req.body.password, newAdmin.password).then((status) => {
-          if (status) {
-            console.log("user exist");
-            req.session.admin = newAdmin;
-            req.session.adminLoggedIn = true;
-            console.log(newAdmin);
-            res.redirect("/admin/home");
-          } else {
-            console.log("password is not matching");
-            req.session.errmsg = "Invalid Username or Password";
-            res.status(400).redirect("/admin/login");
-          }
-        });
+        if (newAdmin.isActive === true) {
+          bcrypt
+            .compare(req.body.password, newAdmin.password)
+            .then((status) => {
+              if (status) {
+                console.log("user exist");
+                req.session.admin = newAdmin;
+                req.session.adminLoggedIn = true;
+                console.log(newAdmin);
+                res.redirect("/admin/home");
+              } else {
+                console.log("password is not matching");
+                req.session.adminerrmsg = "Invalid Username or Password";
+                res.status(400).redirect("/admin/login");
+              }
+            });
+        } else {
+          req.session.adminerrmsg = "Account was Blocked Contact US";
+          res.status(402).redirect("/admin/login");
+        }
       } else {
-        req.session.errmsg = "Invalid Username or Password";
+        req.session.adminerrmsg = "Invalid Username or Password";
         res.status(400).redirect("/admin/login");
       }
     } catch (error) {
@@ -231,19 +235,23 @@ module.exports = {
     }
   },
   deleteCategory: async (req, res, next) => {
-    filterproduct
-      .deleteOne({ _id: req.params.Id })
-      .then((response) => {
-        if (response) {
-          console.log("hai");
-          res.sendStatus(204);
-        } else {
-          res.status(400).json({ message: "unable to delete Category" });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({ message: "Internal server error" });
-      });
+    try {
+      filterproduct
+        .deleteOne({ _id: req.params.Id })
+        .then((response) => {
+          if (response) {
+            console.log("hai");
+            res.sendStatus(204);
+          } else {
+            res.status(400).json({ message: "unable to delete Category" });
+          }
+        })
+        .catch((err) => {
+          res.status(500).json({ message: "Internal server error" });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   },
   statusMerchantUpdate: async (req, res, next) => {
     try {

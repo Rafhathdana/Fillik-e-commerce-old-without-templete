@@ -146,19 +146,24 @@ module.exports = {
     try {
       const newUser = await User.findOne({ email: req.body.email });
       if (newUser) {
-        bcrypt.compare(req.body.password, newUser.password).then((status) => {
-          if (status) {
-            console.log("user exist");
-            req.session.user = newUser;
-            req.session.userLoggedIn = true;
-            console.log(newUser);
-            res.redirect("/home");
-          } else {
-            console.log("password is not matching");
-            req.session.errmsg = "Invalid Username or Password";
-            res.status(400).redirect("/login");
-          }
-        });
+        if (newUser.isActive === true) {
+          bcrypt.compare(req.body.password, newUser.password).then((status) => {
+            if (status) {
+              console.log("user exist");
+              req.session.user = newUser;
+              req.session.userLoggedIn = true;
+              console.log(newUser);
+              res.redirect("/home");
+            } else {
+              console.log("password is not matching");
+              req.session.errmsg = "Invalid Username or Password";
+              res.status(400).redirect("/login");
+            }
+          });
+        } else {
+          req.session.errmsg = "Account was Blocked Contact US";
+          res.status(402).redirect("/login");
+        }
       } else {
         req.session.errmsg = "Invalid Username or Password";
         res.status(400).redirect("/login");
@@ -168,28 +173,46 @@ module.exports = {
     }
   },
   sendOtp: async (req, res, next) => {
-    console.log(req.body.mobile);
-    req.session.otP = Math.floor(100000 + Math.random() * 900000);
-    otp
-      .OTP(req.body.mobile, req.session.otP)
-      .then((response) => {
-        response.success = true;
-        res
-          .status(200)
-          .send({ response, success: true, message: "OTP Sent successfully" });
-      })
-      .catch((error) => {
-        res.status(500).send({ success: false, message: "Error sending OTP" });
-      });
+    try {
+      console.log(req.body.mobile);
+      if (!req.session.otP) {
+        req.session.otP = Math.floor(100000 + Math.random() * 900000);
+      } else {
+      }
+      console.log(req.session.otP);
+      otp
+        .OTP(req.body.mobile, req.session.otP)
+        .then((response) => {
+          response.success = true;
+          res.status(200).send({
+            response,
+            success: true,
+            message: "OTP Sent successfully",
+          });
+        })
+        .catch((error) => {
+          res
+            .status(500)
+            .send({ success: false, message: "Error sending OTP" });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   },
   verifyOtp: async (req, res, next) => {
-    console.log(req.body.OTP);
-    console.log(req.body.otP);
-    if (req.body.userOtp === req.session.otP) {
-      res.status(200).send({ response, message: "OTP verified successfully" });
-    } else {
-      req.session.errmsg = "Invalid Otp";
-      res.status(400).redirect("/login");
+    try {
+      if (parseInt(req.body.userOtp) === req.session.otP) {
+        res.status(200).send({
+          success: true,
+          response,
+          message: "OTP verified successfully",
+        });
+      } else {
+        req.session.errmsg = "Invalid Otp";
+        res.status(500).send({ success: false, message: "Invalid Otp" });
+      }
+    } catch (error) {
+      console.log(error);
     }
   },
   logout: (req, res) => {
@@ -200,5 +223,148 @@ module.exports = {
         res.redirect("/");
       }
     });
+  },
+  productFilterList: async (req, res, next) => {
+    try {
+      const count = 20;
+      const page = parseInt(req.query.page) || 1;
+      const filter = req.filterData;
+      let productsList;
+      if (filter) {
+        productsList = await Products.find(filter)
+          .skip((page - 1) * count)
+          .limit(count)
+          .lean();
+      } else {
+        productsList = await Products.find()
+          .skip((page - 1) * count)
+          .limit(count)
+          .lean();
+      }
+      console.log(productsList);
+      const totalPages = Math.ceil((await Products.countDocuments()) / count);
+      const startIndex = (page - 1) * count;
+
+      const endIndex = Math.min(
+        startIndex + count,
+        await Products.countDocuments()
+      );
+      let category = await filterproduct.find({ categoryname: "Category" });
+      let colour = await filterproduct.find({ categoryname: "Colour" });
+      let pattern = await filterproduct.find({ categoryname: "Pattern" });
+      let genderType = await filterproduct.find({ categoryname: "GenderType" });
+      if (req.session.userLoggedIn) {
+        res.render("user/productlist", {
+          title: "Users List",
+          fullName: req.session.user.fullName,
+          loggedin: req.session.userLoggedIn,
+          productsList,
+          count,
+          page,
+          totalPages,
+          startIndex,
+          endIndex,
+          category,
+          colour,
+          pattern,
+          genderType,
+        });
+      } else {
+        res.render("user/productlist", {
+          title: "Product List",
+          loggedin: false,
+          productsList,
+          count,
+          page,
+          totalPages,
+          startIndex,
+          endIndex,
+          category,
+          colour,
+          pattern,
+          genderType,
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
+  getFilter: async (req, res, next) => {
+    try {
+      const { minPrice, maxPrice, category, genderType, colour, sizes } =
+        req.body;
+
+      // Construct the filter object
+      const filter = {};
+
+      if (minPrice && maxPrice) {
+        filter.price = { $gte: minPrice, $lte: maxPrice };
+      } else if (minPrice) {
+        filter.price = { $gte: minPrice };
+      } else if (maxPrice) {
+        filter.price = { $lte: maxPrice };
+      }
+
+      if (category) {
+        filter.category = category;
+      }
+
+      if (genderType) {
+        filter.genderType = genderType;
+      }
+
+      if (colour) {
+        filter.colour = colour;
+      }
+
+      if (sizes) {
+        filter.sizes = { $in: sizes };
+      }
+
+      req.filterData = filter;
+      next();
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+  },
+  postFilter: async (req, res, next) => {
+    try {
+      const { minPrice, maxPrice, category, genderType, colour, sizes } =
+        req.body;
+
+      // Construct the filter object
+      const filter = {};
+
+      if (minPrice && maxPrice) {
+        filter.price = { $gte: minPrice, $lte: maxPrice };
+      } else if (minPrice) {
+        filter.price = { $gte: minPrice };
+      } else if (maxPrice) {
+        filter.price = { $lte: maxPrice };
+      }
+
+      if (category) {
+        filter.category = category;
+      }
+
+      if (genderType) {
+        filter.genderType = genderType;
+      }
+
+      if (colour) {
+        filter.colour = colour;
+      }
+
+      if (sizes) {
+        filter.sizes = { $in: sizes };
+      }
+
+      req.filterData = filter;
+      next();
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
   },
 };

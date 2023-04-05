@@ -1,7 +1,15 @@
 <header><%- include('header') -%></header>
-
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="http://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"
+  />
+  <script src="http://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+</head>
 <div class="heading">Users Details</div>
-<div class="flex" style="width: 90%; margin-left: 80%">
+<div class="flex" style="margin-bottom: 30px; margin-left: 80%">
   <div class="dropdown me-auto">
     <button
       class="btn btn-secondary dropdown-toggle"
@@ -21,26 +29,14 @@
   </div>
 </div>
 <div class="table-responsive">
-  <table class="table">
+  <table class="table" id="usersTable">
     <thead>
       <tr>
-        <th>Email <a class="ass">^</a><a class="des">^</a></th>
-        <th>
-          Full Name <a href="?ascending" class="ass">^</a
-          ><a href="?ascending" class="des">^</a>
-        </th>
-        <th>
-          No. of Orders <a href="?ascending" class="ass">^</a
-          ><a href="?ascending" class="des">^</a>
-        </th>
-        <th>
-          Complaints<a href="?ascending" class="ass">^</a
-          ><a href="?ascending" class="des">^</a>
-        </th>
-        <th>
-          Actions<a href="?ascending" class="ass">^</a
-          ><a href="?ascending" class="des">^</a>
-        </th>
+        <th>Email</th>
+        <th>Full Name</th>
+        <th>No. of Orders</th>
+        <th>Complaints</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -125,3 +121,12 @@
 </script>
 
 <!-- Include the Bootstrap CSS -->
+<script>
+  $(document).ready(function () {
+    $("#usersTable").DataTable({
+      bInfo: false,
+      bFilter: false,
+      bPaginate: false,
+    });
+  });
+</script>

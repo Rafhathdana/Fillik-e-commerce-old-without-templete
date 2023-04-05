@@ -6,22 +6,6 @@ const { response } = require("../app");
 const multer = require("multer");
 
 module.exports = {
-  merchantauth: (req, res, next) => {
-    if (req.session && req.session.merchant && req.session.merchantLoggedIn) {
-      res.redirect("/merchant/home");
-      console.log(req.session.merchantLoggedIn);
-    } else {
-      next();
-    }
-  },
-  verify: (req, res, next) => {
-    if (req.session && req.session.merchant && req.session.merchantLoggedIn) {
-      console.log(req.session.merchantLoggedIn);
-      next();
-    } else {
-      res.redirect("/merchant/login");
-    }
-  },
   getLogin: (req, res, next) => {
     res.render("merchant/login", {
       title: "merchant",
@@ -89,26 +73,26 @@ module.exports = {
     }
   },
   getAddProduct: async (req, res, next) => {
-    let category = await filterproduct.find({ categoryname: "Category" });
-    let colour = await filterproduct.find({ categoryname: "Colour" });
-    let pattern = await filterproduct.find({ categoryname: "Pattern" });
-    let genderType = await filterproduct.find({ categoryname: "GenderType" });
+    try {
+      let category = await filterproduct.find({ categoryname: "Category" });
+      let colour = await filterproduct.find({ categoryname: "Colour" });
+      let pattern = await filterproduct.find({ categoryname: "Pattern" });
+      let genderType = await filterproduct.find({ categoryname: "GenderType" });
 
-    res.render("merchant/addproduct", {
-      title: "product",
-      brandName: req.session.merchant.brandName,
-      merchantLoggedin: req.session.merchantLoggedIn,
-      category,
-      colour,
-      pattern,
-      genderType,
-    });
+      res.render("merchant/addproduct", {
+        title: "product",
+        brandName: req.session.merchant.brandName,
+        merchantLoggedin: req.session.merchantLoggedIn,
+        category,
+        colour,
+        pattern,
+        genderType,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
   postAddProduct: async (req, res, next) => {
-    console.log(req.session.merchant);
-    console.log(req.body.name);
-    console.log(req.files + "hskq");
-    console.log(req + "hmksjvkjfdbnkjgf,c");
     try {
       const images = [];
       let inumb = 0;
@@ -186,11 +170,11 @@ module.exports = {
   },
   postSignup: async (req, res) => {
     try {
-      const user = await Merchant.findOne({
+      const vMerchant = await Merchant.findOne({
         $or: [{ email: req.body.email }, { mobile: req.body.mobile }],
       }).exec();
 
-      if (!user) {
+      if (!vMerchant) {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newMerchant = new Merchant({
           brandName: req.body.brandName,
@@ -227,22 +211,27 @@ module.exports = {
       const newMerchant = await Merchant.findOne({ email: req.body.email });
       console.log(newMerchant);
       if (newMerchant) {
-        bcrypt
-          .compare(req.body.password, newMerchant.password)
-          .then((status) => {
-            console.log("hai");
-            if (status) {
-              console.log("user exist");
-              req.session.merchant = newMerchant;
-              req.session.merchantLoggedIn = true;
-              console.log(newMerchant);
-              res.redirect("/merchant/home");
-            } else {
-              console.log("password is not matching");
-              req.session.merchanterrmsg = "Invalid Username or Password";
-              res.status(400).redirect("/merchant/login");
-            }
-          });
+        if (newMerchant.isActive === true) {
+          bcrypt
+            .compare(req.body.password, newMerchant.password)
+            .then((status) => {
+              console.log("hai");
+              if (status) {
+                console.log("user exist");
+                req.session.merchant = newMerchant;
+                req.session.merchantLoggedIn = true;
+                console.log(newMerchant);
+                res.redirect("/merchant/home");
+              } else {
+                console.log("password is not matching");
+                req.session.merchanterrmsg = "Invalid Username or Password";
+                res.status(400).redirect("/merchant/login");
+              }
+            });
+        } else {
+          req.session.merchanterrmsg = "Account was Blocked Contact US";
+          res.status(402).redirect("/merchant/login");
+        }
       } else {
         req.session.merchanterrmsg = "Invalid Username or Password";
         res.status(400).redirect("/merchant/login");
@@ -261,26 +250,30 @@ module.exports = {
     });
   },
   deleteProduct: async (req, res, next) => {
-    let productdetails = await Product.findById(req.params.Id);
-    if (
-      productdetails.Orders.small.length == 1 &&
-      productdetails.Orders.medium.length == 1 &&
-      productdetails.Orders.large.length == 1 &&
-      productdetails.Orders.extraLarge.length == 1
-    ) {
-      Product.deleteOne({ _id: req.params.Id })
-        .then((response) => {
-          if (response) {
-            res.sendStatus(204);
-          } else {
-            res.status(400).json({ message: "unable to delete Product" });
-          }
-        })
-        .catch((err) => {
-          res.status(500).json({ message: "Internal server error" });
-        });
-    } else {
-      res.status(500).json({ message: "Can't able to delete" });
+    try {
+      let productdetails = await Product.findById(req.params.Id);
+      if (
+        productdetails.Orders.small.length == 1 &&
+        productdetails.Orders.medium.length == 1 &&
+        productdetails.Orders.large.length == 1 &&
+        productdetails.Orders.extraLarge.length == 1
+      ) {
+        Product.deleteOne({ _id: req.params.Id })
+          .then((response) => {
+            if (response) {
+              res.sendStatus(204);
+            } else {
+              res.status(400).json({ message: "unable to delete Product" });
+            }
+          })
+          .catch((err) => {
+            res.status(500).json({ message: "Internal server error" });
+          });
+      } else {
+        res.status(500).json({ message: "Can't able to delete" });
+      }
+    } catch (error) {
+      console.log(error);
     }
   },
   statusProductUpdate: async (req, res, next) => {
@@ -294,12 +287,11 @@ module.exports = {
       } else {
         value = true;
       }
-      merchants
-        .findOneAndUpdate(
-          { _id: req.params.userId },
-          { isActive: value },
-          { new: true }
-        )
+      Merchant.findOneAndUpdate(
+        { _id: req.params.userId },
+        { isActive: value },
+        { new: true }
+      )
         .then((updatedUser) => {
           res.sendStatus(204);
         })

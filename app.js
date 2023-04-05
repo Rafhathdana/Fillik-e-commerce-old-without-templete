@@ -1,18 +1,18 @@
 var createError = require("http-errors");
-var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const bodyParser = require("body-parser");
+const express = require("express");
+const session = require("express-session");
+const app = express();
 
 var usersRouter = require("./routes/user");
 var merchantRouter = require("./routes/merchant");
 var adminRouter = require("./routes/admin");
 const multer = require("multer");
 
-var app = express();
 var db = require("./config/connection");
-var session = require("express-session");
 // view engine setup
 const mongoose = require("mongoose");
 app.set("views", path.join(__dirname, "views"));

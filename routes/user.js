@@ -38,21 +38,17 @@ router.get("/login", userauth, function (req, res, next) {
   req.session.errmsg = null;
 });
 router.get("/home", verify, userController.getProductlist);
-router.get("/productlist", userController.getProductlist);
+router.get(
+  "/productlist",
+  userController.getFilter,
+  userController.productFilterList
+);
+router.get("/product", userController.productFilterList);
 router.get("/productview/:productId", userController.getProductView);
 router.post("/signup", userauth, userController.postSignup);
 router.post("/login", userauth, userController.postSignin);
 router.post("/sendotp", userController.sendOtp);
 router.post("/verifyotp", userController.verifyOtp);
-router.get("/logout", function (req, res) {
-  req.session.destroy(function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/");
-    }
-  });
-});
 router.get("/logout", userController.logout);
 
 module.exports = router;
