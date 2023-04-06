@@ -415,3 +415,16 @@ td {
   text-align: center;
   color: #000000;
 }
+.pagenumbers {
+  color: #000000;
+  background: #8ef9e4;
+  display: flex;
+  justify-content: end;
+  margin-top: 40px;
+  padding-right: 50px;
+}
+.pagenumbers a {
+  border-color: #050504;
+  border-radius: 20px;
+  margin: 0px, 30px;
+}

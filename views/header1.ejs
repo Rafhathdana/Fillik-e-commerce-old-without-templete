@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="auto">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Bootstrap Header</title>
-    <!-- Bootstrap CSS -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="generator" content="Hugo 0.111.3" />
+    <title>Fillik Fashsions</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <!-- Font Awesome Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="/stylesheets/style.css" rel="stylesheet" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img src="/images/icon.png" class="icon-head" />
@@ -27,23 +34,26 @@
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
+          data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <div
-          class="collapse navbar-collapse justify-content-between"
-          id="navbarNav"
-        >
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <div class="nav-link"></div>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <!-- <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li> -->
           </ul>
-          <form class="d-flex">
+          <form class="d-flex" role="search">
             <input
               class="form-control me-2"
               type="search"
@@ -52,7 +62,7 @@
             />
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
-          <ul class="navbar-nav">
+          <ul class="navbar-nav mx-md-4">
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -66,49 +76,79 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a class="dropdown-item" href="/productlist/Men+Shirt"
+                  <a class="dropdown-item" href="/productlist?Men+Shirt"
                     >Men’s Shirts</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/productlist/Men+T-Shirt"
+                  <a class="dropdown-item" href="/productlist?Men+T-Shirt"
                     >Men’s T-Shirts</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/productlist/Men+Pant"
+                  <a class="dropdown-item" href="/productlist?Men+Pant"
                     >Men’s Pants</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/productlist/Women+Tops"
+                  <a class="dropdown-item" href="/productlist?Women+Tops"
                     >Women’s Tops</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/productlist/Women+T-shirt"
+                  <a class="dropdown-item" href="/productlist?Women+T-shirt"
                     >Women’s T-shirts</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/productlist/Women+Pants"
+                  <a class="dropdown-item" href="/productlist?Women+Pants"
                     >Women’s Pants</a
                   >
                 </li>
               </ul>
             </li>
             <% if(loggedin) { %>
-            <li class="nav-item">
+            <li class="nav-item lg-mx-2">
               <a class="nav-link" href="#">Cart</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><%=user.name%></a>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <%=fullName%>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                <li><a class="dropdown-item" href="#">Change Password</a></li>
+                <li><a class="dropdown-item" href="/logout">logout</a></li>
+              </ul>
             </li>
             <%} else{ %>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Cart</a>
+            <li class="nav-item lg-mx-2">
+              <div class="wrap-icon-header flex-w flex-r-m flex-colum">
+                <div
+                  class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+                  data-notify="2"
+                >
+                  <i class="fa fa-shopping-cart"></i>
+                </div>
+
+                <a
+                  href="#"
+                  class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+                  data-notify="0"
+                >
+                  <i class="fa fa-heart-o"></i>
+                </a>
+              </div>
             </li>
-            <li class="nav-item">
+
+            <li class="nav-item lg-mx-2">
               <a class="nav-link" href="login">Login</a>
             </li>
             <% } %>
@@ -116,8 +156,17 @@
         </div>
       </div>
     </nav>
- </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
+<script>
+  const cartIcon = document.querySelector(".js-show-cart");
+  const cartElement = document.querySelector(".cart");
 
-
-
+  // Add a click event listener to the cart icon
+  cartIcon.addEventListener("click", () => {
+    // Toggle the visibility of the cart element
+    cartElement.classList.toggle("show");
+  });
+</script>
